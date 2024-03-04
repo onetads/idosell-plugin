@@ -1,0 +1,22 @@
+import { TPages } from 'types/pages';
+
+const PRODUCT_LIST_SELECTOR = 'search';
+const PRODUCT_DETAILS_SELECTOR = 'projector_form';
+const PRODUCT_ID_KEY = 'product_id';
+
+const DATA_PRODUCT_ID = 'data-product_id';
+const DATA_PRODUCT_SELECTOR = `[${DATA_PRODUCT_ID}]`;
+
+const PRODUCT_CONTAINERS: Record<TPages, string> = {
+  PRODUCTS_LIST: PRODUCT_LIST_SELECTOR,
+  PRODUCT_DETAILS: PRODUCT_DETAILS_SELECTOR,
+};
+
+export {
+  PRODUCT_LIST_SELECTOR,
+  PRODUCT_DETAILS_SELECTOR,
+  PRODUCT_CONTAINERS,
+  DATA_PRODUCT_SELECTOR,
+  DATA_PRODUCT_ID,
+  PRODUCT_ID_KEY,
+};

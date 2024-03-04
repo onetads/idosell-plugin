@@ -10,7 +10,12 @@
       "checkJs": true,
       "moduleResolution": "node",
       "strictNullChecks": true,
-      "paths": {}
+      "paths": {
+        "consts/*": ["./src/consts/*"],
+        "utils/*": ["./src/utils/*"],
+        "types/*": ["./src/types/*"],
+        "managers/*": ["./src/managers/*"],
+      }
     },
     "include": ["**/*.js", "**/*.ts"],
     "exclude": ["dist", "node_modules"],

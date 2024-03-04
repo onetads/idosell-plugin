@@ -14,7 +14,12 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    alias: {},
+    alias: {
+      consts: path.resolve(__dirname, './src/consts'),
+      utils: path.resolve(__dirname, './src/utils'),
+      types: path.resolve(__dirname, './src/types'),
+      managers: path.resolve(__dirname, './src/managers'),
+    },
   },
   output: {
     filename: 'bundle.js',
