@@ -1,5 +1,26 @@
-import { PRODUCTS_LIST, PRODUCT_DETAILS } from 'consts/pages';
+import {
+  MAIN_PAGE,
+  MAIN_PAGE_HOTSPOT_ONE,
+  MAIN_PAGE_HOTSPOT_THREE,
+  MAIN_PAGE_HOTSPOT_TWO,
+  PRODUCTS_LIST,
+  PRODUCT_DETAILS_ASSOCIATED_ONE,
+  PRODUCT_DETAILS_ASSOCIATED_TWO,
+  PRODUCT_DETAILS_PAGE,
+} from 'consts/pages';
 
-type TPages = typeof PRODUCTS_LIST | typeof PRODUCT_DETAILS;
+type TPages =
+  | typeof PRODUCTS_LIST
+  | typeof PRODUCT_DETAILS_PAGE
+  | typeof MAIN_PAGE;
 
-export type { TPages };
+type TProductDetailsZones =
+  | typeof PRODUCT_DETAILS_ASSOCIATED_ONE
+  | typeof PRODUCT_DETAILS_ASSOCIATED_TWO;
+
+type TMainPageZones =
+  | typeof MAIN_PAGE_HOTSPOT_ONE
+  | typeof MAIN_PAGE_HOTSPOT_TWO
+  | typeof MAIN_PAGE_HOTSPOT_THREE;
+
+export type { TPages, TProductDetailsZones, TMainPageZones };

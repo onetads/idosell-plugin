@@ -1,20 +1,22 @@
-import { PRODUCTS_LIST, PRODUCT_DETAILS } from 'consts/pages';
+import { PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import {
-  PRODUCT_DETAILS_SELECTOR,
+  PRODUCT_DETAILS_PAGE_SELECTOR,
   PRODUCT_LIST_SELECTOR,
 } from 'consts/products';
 
 const getCurrentPageInfo = () => {
-  const productList = document.getElementById(PRODUCT_LIST_SELECTOR);
+  const productList = document.querySelector(PRODUCT_LIST_SELECTOR);
 
   if (productList) {
     return PRODUCTS_LIST;
   }
 
-  const productDetails = document.getElementById(PRODUCT_DETAILS_SELECTOR);
+  const relatedProductList = document.querySelector(
+    PRODUCT_DETAILS_PAGE_SELECTOR,
+  );
 
-  if (productDetails) {
-    return PRODUCT_DETAILS;
+  if (relatedProductList) {
+    return PRODUCT_DETAILS_PAGE;
   }
 };
 

@@ -1,4 +1,5 @@
 import { EMPTY_LIST_WARN } from 'consts/messages';
+import { PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import {
   DATA_PRODUCT_SELECTOR,
   PRODUCT_CONTAINERS,
@@ -10,8 +11,29 @@ import getMessage from 'utils/formatters/getMessage';
 
 const initAdManager = (page: TPages | null) => new AdManager(page);
 
+const getCurrentProductContainer = (page: TPages) => {
+  if (page === PRODUCTS_LIST) {
+    return document.querySelector(PRODUCT_CONTAINERS[page]);
+  }
+
+  if (page === PRODUCT_DETAILS_PAGE) {
+    const pageDetailsSupportedZone =
+      window.sponsoredProductConfig.pageDetails.zone;
+
+    return document.querySelector(
+      PRODUCT_CONTAINERS[page][pageDetailsSupportedZone],
+    );
+  }
+
+  const mainPageSupportedZone = window.sponsoredProductConfig.mainPage.zone;
+
+  return document.querySelector(
+    PRODUCT_CONTAINERS[page][mainPageSupportedZone],
+  );
+};
+
 const getProductsIds = (page: TPages) => {
-  const productsContainer = document.getElementById(PRODUCT_CONTAINERS[page]);
+  const productsContainer = getCurrentProductContainer(page);
 
   if (!productsContainer) return [];
 
