@@ -6,3 +6,5 @@
 
 # Misc
 .husky
+
+.DS_Store
