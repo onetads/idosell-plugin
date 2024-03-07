@@ -7,6 +7,6 @@ const mapConfigPages = (page: TPages) =>
     [PRODUCTS_LIST]: 'productsListing',
     [MAIN_PAGE]: 'mainPage',
     [PRODUCT_DETAILS_PAGE]: 'pageDetails',
-  })[page] as keyof TSponsoredProductConfig;
+  })[page] as keyof Omit<TSponsoredProductConfig, 'isLoaderVisible'>;
 
 export default mapConfigPages;

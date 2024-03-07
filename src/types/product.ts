@@ -3,20 +3,20 @@ import { TMainPageZones, TPages, TProductDetailsZones } from 'types/pages';
 
 enum EProductElements {
   ID = 'ID',
-  IMG = 'IMG',
-  PRODUCT_NAME = 'PRODUCT_NAME',
-  PRODUCT_LINK = 'PRODUCT_LINK',
-  PRICE = 'PRICE',
-  CATEGORY = 'CATEGORY',
+  TITLE = 'TITLE',
   PRODUCER = 'PRODUCER',
-  PRODUCER_LINK = 'PRODUCER_LINK',
-  AVAILABILITY = 'AVAILABILITY',
-  DELIVERY = 'DELIVERY',
+  PRODUCER_URL = 'PRODUCER_URL',
+  PRICE = 'PRICE',
+  OMNIBUS = 'OMNIBUS',
+  IMG = 'IMG',
+  PRODUCT_LINK = 'PRODUCT_LINK',
+  COMPARE = 'COMPARE',
   DESCRIPTION = 'DESCRIPTION',
-  STOCK_ID = 'STOCK_ID',
 }
 
 type TProductSelectors = Record<TPages, string>;
+
+type TProductIdExtractorKeys = Record<TPages, string>;
 
 type TProductContainers = {
   [MAIN_PAGE]: Record<TMainPageZones, string>;
@@ -24,4 +24,9 @@ type TProductContainers = {
   [PRODUCTS_LIST]: string;
 };
 
-export { EProductElements, TProductSelectors, TProductContainers };
+export {
+  EProductElements,
+  TProductSelectors,
+  TProductContainers,
+  TProductIdExtractorKeys,
+};

@@ -1,44 +1,26 @@
 import { EMPTY_LIST_WARN } from 'consts/messages';
-import { PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import {
-  DATA_PRODUCT_SELECTOR,
-  PRODUCT_CONTAINERS,
-  PRODUCT_ID_KEY,
+  PRODUCT_ID_EXTRACTOR_KEYS,
+  PRODUCT_ID_SELECTORS,
 } from 'consts/products';
-import AdManager from 'managers/AdManager/AdManager';
 import { TPages } from 'types/pages';
 import getMessage from 'utils/formatters/getMessage';
+import AdManager from 'managers/AdManager/AdManager';
+import getProductsContainer from 'utils/helpers/getProductsContainer';
 
 const initAdManager = (page: TPages | null) => new AdManager(page);
 
-const getCurrentProductContainer = (page: TPages) => {
-  if (page === PRODUCTS_LIST) {
-    return document.querySelector(PRODUCT_CONTAINERS[page]);
-  }
-
-  if (page === PRODUCT_DETAILS_PAGE) {
-    const pageDetailsSupportedZone =
-      window.sponsoredProductConfig.pageDetails.zone;
-
-    return document.querySelector(
-      PRODUCT_CONTAINERS[page][pageDetailsSupportedZone],
-    );
-  }
-
-  const mainPageSupportedZone = window.sponsoredProductConfig.mainPage.zone;
-
-  return document.querySelector(
-    PRODUCT_CONTAINERS[page][mainPageSupportedZone],
-  );
-};
-
 const getProductsIds = (page: TPages) => {
-  const productsContainer = getCurrentProductContainer(page);
+  const { productsContainer, productIdSelector, productIdExtractorKey } = {
+    productsContainer: getProductsContainer(page),
+    productIdSelector: PRODUCT_ID_SELECTORS[page],
+    productIdExtractorKey: PRODUCT_ID_EXTRACTOR_KEYS[page],
+  };
 
   if (!productsContainer) return [];
 
   const productElements = Array.from(
-    productsContainer.querySelectorAll(DATA_PRODUCT_SELECTOR),
+    productsContainer.querySelectorAll(productIdSelector),
   );
 
   const productsIds = [];
@@ -47,12 +29,12 @@ const getProductsIds = (page: TPages) => {
     if (
       !(
         productElement instanceof HTMLElement &&
-        PRODUCT_ID_KEY in productElement.dataset
+        productIdExtractorKey in productElement.dataset
       )
     )
       continue;
 
-    const productId = productElement.dataset[PRODUCT_ID_KEY];
+    const productId = productElement.dataset[productIdExtractorKey];
     if (!productId) continue;
 
     productsIds.push(+productId);

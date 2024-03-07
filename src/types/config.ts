@@ -16,7 +16,6 @@ type TSponsoredProductConfig = {
 
   mainPage: {
     isEnabled: boolean;
-
     zone: TMainPageZones;
     productsCount: number;
   };

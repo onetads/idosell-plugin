@@ -1,6 +1,6 @@
 import {
-  MAIN_PAGE_HOTSPOT_ONE,
-  PRODUCT_DETAILS_ASSOCIATED_ONE,
+  MAIN_PAGE_HOTSPOT_TWO,
+  PRODUCT_DETAILS_ASSOCIATED_TWO,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initTemplateManager } from 'managers/TemplateManager/TemplateManager.utils';
@@ -15,12 +15,12 @@ window.sponsoredProductConfig = {
   },
   pageDetails: {
     isEnabled: true,
-    zone: PRODUCT_DETAILS_ASSOCIATED_ONE,
+    zone: PRODUCT_DETAILS_ASSOCIATED_TWO,
     productsCount: 1,
   },
   mainPage: {
     isEnabled: true,
-    zone: MAIN_PAGE_HOTSPOT_ONE,
+    zone: MAIN_PAGE_HOTSPOT_TWO,
     productsCount: 1,
   },
 };
@@ -38,9 +38,7 @@ const runApp = async () => {
     const AdManager = initAdManager(page);
     AdManager.injectAdnPixelScript();
 
-    const TemplateManager = initTemplateManager(page);
-
-    TemplateManager.checkDOMforTemplates();
+    initTemplateManager(page);
   } catch (e) {
     if (e instanceof Error) {
       console.error(e.message);

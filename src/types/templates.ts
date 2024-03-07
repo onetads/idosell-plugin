@@ -1,10 +1,14 @@
-import { TMainPageZones, TPages, TProductDetailsZones } from 'types/pages';
 import { EProductElements } from 'types/product';
 
 enum ETemplates {
-  PRODUCTS_LISTING = 'GRID_VIEW',
-  ASSOCIATED_PRODUCTS_LISTING_ONE = 'ASSOCIATED_PRODUCTS_LISTING_ONE',
-  ASSOCIATED_PRODUCTS_LISTING_TWO = 'ASSOCIATED_PRODUCTS_LISTING_TWO',
+  PRODUCTS_LISTING = 'PRODUCTS_LISTING',
+
+  PRODUCT_DETAILS_ASSOCIATED_ONE = 'PRODUCT_DETAILS_ASSOCIATED_ONE',
+  PRODUCT_DETAILS_ASSOCIATED_TWO = 'PRODUCT_DETAILS_ASSOCIATED_TWO',
+
+  MAIN_PAGE_HOTSPOT_ONE = 'MAIN_PAGE_HOTSPOT_ONE',
+  MAIN_PAGE_HOTSPOT_TWO = 'MAIN_PAGE_HOTSPOT_TWO',
+  MAIN_PAGE_HOTSPOT_THREE = 'MAIN_PAGE_HOTSPOT_THREE',
 }
 
 type TContentMap = {
@@ -15,16 +19,14 @@ type TContentMap = {
 };
 
 type TContentMapItem = {
-  key: EProductElements;
+  key: string;
   map: TContentMap[];
 };
 
 type TReplaceContentMap = Record<
-  TPages,
-  | TContentMapItem[]
-  | Record<TMainPageZones, TContentMapItem[]>
-  | Record<TProductDetailsZones, TContentMapItem[]>
+  ETemplates,
+  Record<EProductElements, TContentMapItem>
 >;
 
 export { ETemplates };
-export { TReplaceContentMap };
+export { TReplaceContentMap, TContentMapItem };
