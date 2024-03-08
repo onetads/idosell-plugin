@@ -12,7 +12,6 @@ import {
 import { REPLACE_CONTENT_MAP } from 'consts/replaceMap';
 import { CONTENT, PRODUCT_IMAGE_URL_KEY } from 'consts/replaceMap/keys';
 import { NOT_VALID_TEMPLATE } from 'consts/templates';
-// import { NOT_VALID_TEMPLATE } from 'consts/templates';
 import {
   checkIsProductAvailable,
   getMappedTemplate,
