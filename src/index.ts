@@ -35,8 +35,7 @@ const runApp = async () => {
 
     if (typeof configPage === 'object' && !configPage.isEnabled) return;
 
-    const AdManager = initAdManager(page);
-    AdManager.injectAdnPixelScript();
+    initAdManager(page);
 
     initTemplateManager(page);
   } catch (e) {
