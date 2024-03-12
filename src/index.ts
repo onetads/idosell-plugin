@@ -3,7 +3,7 @@ import {
   PRODUCT_DETAILS_ASSOCIATED_TWO,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
-import { initTemplateManager } from 'managers/TemplateManager/TemplateManager.utils';
+import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
 import mapConfigPages from 'utils/helpers/mapConfigPages';
 
@@ -37,7 +37,8 @@ const runApp = async () => {
 
     initAdManager(page);
 
-    initTemplateManager(page);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const productManager = initProductManager(page);
   } catch (e) {
     if (e instanceof Error) {
       console.error(e.message);

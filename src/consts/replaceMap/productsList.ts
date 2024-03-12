@@ -1,6 +1,5 @@
 import {
   CONTENT,
-  PRODUCT_COMPARE_KEY,
   PRODUCT_DESCRIPTION_KEY,
   PRODUCT_ID_KEY,
   PRODUCT_IMAGE_URL_KEY,
@@ -125,16 +124,6 @@ export default {
       {
         selector: '.product .product__name',
         replace: ['href'],
-      },
-    ],
-  },
-
-  [EProductElements.COMPARE]: {
-    key: PRODUCT_COMPARE_KEY,
-    map: [
-      {
-        selector: '.product .product__compare_item',
-        replace: [CONTENT],
       },
     ],
   },

@@ -10,7 +10,6 @@ enum EProductElements {
   OMNIBUS = 'OMNIBUS',
   IMG = 'IMG',
   PRODUCT_LINK = 'PRODUCT_LINK',
-  COMPARE = 'COMPARE',
   DESCRIPTION = 'DESCRIPTION',
 }
 
@@ -24,9 +23,22 @@ type TProductContainers = {
   [PRODUCTS_LIST]: string;
 };
 
-export {
-  EProductElements,
+type TProduct = {
+  id: string;
+  title: string;
+  producerName: string;
+  producerUrl: string;
+  price: string;
+  omnibus: string;
+  imageUrl: string;
+  link: string;
+  description: string;
+};
+
+export { EProductElements };
+export type {
   TProductSelectors,
   TProductContainers,
   TProductIdExtractorKeys,
+  TProduct,
 };

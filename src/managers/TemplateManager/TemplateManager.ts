@@ -37,14 +37,10 @@ class TemplateManager {
       [currVal]: sessionStorage.getItem(currVal),
     }),
     {},
-  ) as Record<ETemplates, string | null>;
+  ) as Record<ETemplates, string>;
 
   public checkDOMforTemplates = () => {
-    const productsContainer = getProductsContainer(this.page);
-
-    if (!productsContainer) {
-      throw new Error(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
-    }
+    const productsContainer = this.getProductsContainerIfExists();
 
     const products = Array.from(
       productsContainer.querySelectorAll(PRODUCT_SELECTOR),
@@ -65,6 +61,20 @@ class TemplateManager {
 
       this.saveTemplateInSessionStorage(product);
     }
+  };
+
+  protected getProductsContainerIfExists = () => {
+    const productsContainer = getProductsContainer(this.page);
+
+    if (!productsContainer) {
+      throw new Error(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
+    }
+
+    return productsContainer;
+  };
+
+  protected getCurrentTempalate = () => {
+    return this.templates[this.currentTemplate];
   };
 
   private saveTemplateInSessionStorage = (productElement: HTMLElement) => {
@@ -144,7 +154,7 @@ class TemplateManager {
 
     if (!canInjectTemplate) return NOT_VALID_TEMPLATE;
 
-    return copiedProductElement.outerHTML;
+    return copiedProductElement.innerHTML;
   };
 }
 
