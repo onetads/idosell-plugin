@@ -7,6 +7,8 @@ import { TPages } from 'types/pages';
 import getMessage from 'utils/formatters/getMessage';
 import AdManager from 'managers/AdManager/AdManager';
 import getProductsContainer from 'utils/helpers/getProductsContainer';
+import { TAdProduct } from 'types/product';
+import { GET_PRODUCTS_DATA_QUERY, PRODUCTS_IDS_KEY } from 'consts/queries';
 
 const initAdManager = (page: TPages | null) => new AdManager(page);
 
@@ -47,4 +49,17 @@ const getProductsIds = (page: TPages) => {
   return productsIds;
 };
 
-export { initAdManager, getProductsIds };
+const extractProductsIds = (products: TAdProduct[]) => {
+  return [
+    ...new Set(products.map((product) => product.offerId.match(/\d+/)![0])),
+  ];
+};
+
+const prepareProductsQuery = (products: TAdProduct[]) => {
+  return GET_PRODUCTS_DATA_QUERY.replace(
+    PRODUCTS_IDS_KEY,
+    extractProductsIds(products).join(','),
+  );
+};
+
+export { initAdManager, getProductsIds, prepareProductsQuery };

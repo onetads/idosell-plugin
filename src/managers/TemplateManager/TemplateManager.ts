@@ -23,12 +23,6 @@ import getMessage from 'utils/formatters/getMessage';
 import getProductsContainer from 'utils/helpers/getProductsContainer';
 
 class TemplateManager {
-  constructor(page: TPages) {
-    this.page = page;
-    this.currentTemplate = getMappedTemplate(page);
-    this.checkDOMforTemplates();
-  }
-
   private currentTemplate: ETemplates;
   private page: TPages;
   private templates = Object.keys(ETemplates).reduce(
@@ -38,6 +32,12 @@ class TemplateManager {
     }),
     {},
   ) as Record<ETemplates, string>;
+
+  constructor(page: TPages) {
+    this.page = page;
+    this.currentTemplate = getMappedTemplate(page);
+    this.checkDOMforTemplates();
+  }
 
   public checkDOMforTemplates = () => {
     const productsContainer = this.getProductsContainerIfExists();

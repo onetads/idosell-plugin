@@ -10,9 +10,8 @@ enum EProductElements {
   OMNIBUS = 'OMNIBUS',
   IMG = 'IMG',
   PRODUCT_LINK = 'PRODUCT_LINK',
+  COMPARE = 'COMPARE',
   DESCRIPTION = 'DESCRIPTION',
-  POINTS = 'POINTS',
-  PRICE_MAX = 'PRICE_MAX',
 }
 
 type TProductSelectors = Record<TPages, string>;
@@ -25,7 +24,47 @@ type TProductContainers = {
   [PRODUCTS_LIST]: string;
 };
 
-type TProduct = {
+type TAdProduct = {
+  offerId: string;
+  imageUrl: string;
+  offerUrl: string;
+  dsaUrl: string;
+};
+
+type TProductResponse = {
+  data: {
+    products: {
+      products: {
+        description: string;
+        id: number;
+        name: string;
+        price: {
+          price: {
+            gross: {
+              formatted: string;
+            };
+          };
+          omnibusPrice: {
+            gross: {
+              formatted: string;
+            };
+          } | null;
+        };
+        producer: {
+          name: string;
+          link: string;
+        };
+        sizes: {
+          availability: {
+            status: string;
+          };
+        }[];
+      }[];
+    };
+  };
+};
+
+type TFormattedProduct = {
   id: string;
   title: string;
   producerName: string;
@@ -35,14 +74,14 @@ type TProduct = {
   imageUrl: string;
   link: string;
   description: string;
-  points: string;
-  priceMax: string;
 };
 
-export { EProductElements };
-export type {
+export {
+  EProductElements,
+  TAdProduct,
   TProductSelectors,
   TProductContainers,
   TProductIdExtractorKeys,
-  TProduct,
+  TProductResponse,
+  TFormattedProduct,
 };
