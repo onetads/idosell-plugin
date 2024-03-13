@@ -39,7 +39,7 @@ class TemplateManager {
     this.checkDOMforTemplates();
   }
 
-  public checkDOMforTemplates = () => {
+  private checkDOMforTemplates = () => {
     const productsContainer = this.getProductsContainerIfExists();
 
     const products = Array.from(

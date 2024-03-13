@@ -35,10 +35,13 @@ const runApp = async () => {
 
     if (typeof configPage === 'object' && !configPage.isEnabled) return;
 
-    initAdManager(page);
+    const AdManager = initAdManager(page);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const products = await AdManager.getPromotedProducts();
+
     const productManager = initProductManager(page);
+
+    productManager.injectProduct(products);
   } catch (e) {
     if (e instanceof Error) {
       console.error(e.message);
@@ -53,3 +56,4 @@ if (document.readyState !== 'loading') {
     runApp();
   });
 }
+
