@@ -11,6 +11,8 @@ enum EProductElements {
   IMG = 'IMG',
   PRODUCT_LINK = 'PRODUCT_LINK',
   DESCRIPTION = 'DESCRIPTION',
+  POINTS = 'POINTS',
+  PRICE_MAX = 'PRICE_MAX',
 }
 
 type TProductSelectors = Record<TPages, string>;
@@ -33,6 +35,8 @@ type TProduct = {
   imageUrl: string;
   link: string;
   description: string;
+  points: string;
+  priceMax: string;
 };
 
 export { EProductElements };

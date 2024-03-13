@@ -4,7 +4,9 @@ import {
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
   PRODUCT_OMNIBUS_KEY,
+  PRODUCT_POINTS_KEY,
   PRODUCT_PRICE_KEY,
+  PRODUCT_PRICE_MAX_KEY,
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
   PRODUCT_TITLE_KEY,
@@ -26,6 +28,8 @@ const getProductMap = (product: TProduct) => {
     [PRODUCT_IMAGE_URL_KEY]: product.imageUrl,
     [PRODUCT_LINK_KEY]: product.link,
     [PRODUCT_DESCRIPTION_KEY]: product.description,
+    [PRODUCT_POINTS_KEY]: product.points,
+    [PRODUCT_PRICE_MAX_KEY]: product.priceMax,
   };
 };
 

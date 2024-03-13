@@ -5,7 +5,9 @@ import {
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
   PRODUCT_OMNIBUS_KEY,
+  PRODUCT_POINTS_KEY,
   PRODUCT_PRICE_KEY,
+  PRODUCT_PRICE_MAX_KEY,
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
   PRODUCT_TITLE_KEY,
@@ -72,8 +74,12 @@ export default {
     key: PRODUCT_PRICE_KEY,
     map: [
       {
-        selector: '.product .price',
+        selector: '.product .price:not(.--points,.--max)',
         replace: [CONTENT],
+        prepareValue: (element) => {
+          element.childNodes[0].textContent = PRODUCT_PRICE_KEY;
+          return element.innerHTML;
+        },
       },
     ],
   },
@@ -118,6 +124,32 @@ export default {
     map: [
       {
         selector: '.product .product_cleardescription',
+        replace: [CONTENT],
+        canBeNull: true,
+      },
+    ],
+  },
+
+  [EProductElements.POINTS]: {
+    key: PRODUCT_POINTS_KEY,
+    map: [
+      {
+        selector: '.product .price:has(.--points)',
+        replace: [CONTENT],
+        canBeNull: true,
+        prepareValue: (element) => {
+          element.childNodes[0].textContent = PRODUCT_POINTS_KEY;
+          return element.innerHTML;
+        },
+      },
+    ],
+  },
+
+  [EProductElements.PRICE_MAX]: {
+    key: PRODUCT_PRICE_MAX_KEY,
+    map: [
+      {
+        selector: '.product .--max del',
         replace: [CONTENT],
         canBeNull: true,
       },

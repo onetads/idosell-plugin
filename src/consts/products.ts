@@ -63,12 +63,7 @@ const PRODUCT_ID_EXTRACTOR_KEYS: TProductIdExtractorKeys = {
   [MAIN_PAGE]: HOT_SPOT_PRODUCT_EXTRACTOR_KEY,
 };
 
-const CONTAINER_SELECTORS_TO_DELETE = [
-  '.product__traits',
-  '.--points',
-  '.label_icons',
-  '.--max',
-];
+const CONTAINER_SELECTORS_TO_DELETE = ['.product__traits', '.label_icons'];
 
 export {
   PRODUCT_LIST_SELECTOR,

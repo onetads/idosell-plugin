@@ -1,6 +1,6 @@
 import {
   MAIN_PAGE_HOTSPOT_TWO,
-  PRODUCT_DETAILS_ASSOCIATED_TWO,
+  PRODUCT_DETAILS_ASSOCIATED_ONE,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
@@ -15,7 +15,7 @@ window.sponsoredProductConfig = {
   },
   pageDetails: {
     isEnabled: true,
-    zone: PRODUCT_DETAILS_ASSOCIATED_TWO,
+    zone: PRODUCT_DETAILS_ASSOCIATED_ONE,
     productsCount: 1,
   },
   mainPage: {

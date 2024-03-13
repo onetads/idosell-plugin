@@ -4,15 +4,17 @@ import { TPages } from 'types/pages';
 import { TProduct } from 'types/product';
 
 const dummyData: TProduct = {
-  id: '2111111',
-  title: 'Product title',
-  producerName: 'Producer TEST',
+  id: '5',
+  title: 'Samsung Galaxy S21 Ultra 5G',
+  producerName: 'Samsung',
   link: 'https://www.google.com',
   producerUrl: 'https://www.google.com',
-  price: '100',
-  omnibus: '50',
+  price: '5 218,99 zł',
+  omnibus: '4 922,99 zł',
   imageUrl: 'https://placehold.co/600x400',
-  description: 'Product description',
+  description: 'Szybki smartfon z dużym ekranem',
+  points: '12312',
+  priceMax: '5 918,99 zł',
 };
 
 class ProductManager extends TemplateManager {
@@ -38,10 +40,6 @@ class ProductManager extends TemplateManager {
     }
 
     const productsContainer = this.getProductsContainerIfExists();
-
-    console.log(productsContainer);
-
-    console.log(this.templateHTML);
 
     productsContainer.insertAdjacentHTML('beforeend', this.templateHTML);
   };

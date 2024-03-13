@@ -127,7 +127,9 @@ class TemplateManager {
         selectedElements.forEach((element) => {
           replace.forEach((item) => {
             if (item === CONTENT) {
-              element.innerHTML = key;
+              const newValue = prepareValue ? prepareValue(element) : key;
+
+              element.innerHTML = newValue;
               return;
             }
 
