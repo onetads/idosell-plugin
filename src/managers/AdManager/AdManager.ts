@@ -4,13 +4,11 @@ import {
   ERROR_PROMOTED_PRODUCTS_MSG,
   REQUEST_TIMED_OUT,
 } from 'consts/messages';
-import {
-  getProductsIds,
-  prepareProductsQuery,
-} from 'managers/AdManager/AdManager.utils';
+import { getProductsIds } from 'managers/AdManager/AdManager.utils';
 import { TPages } from 'types/pages';
 import { TAdProduct, TProductResponse, TFormattedProduct } from 'types/product';
 import getMessage from 'utils/formatters/getMessage';
+import prepareProductsQuery from 'utils/queries/prepareProductsQuery';
 
 class AdManager {
   private page: TPages | null;
@@ -106,7 +104,7 @@ class AdManager {
       if (!isAvailable) continue;
 
       const { imageUrl, offerUrl } = products.find(
-        (p) => p.offerId.match(/\d+/)![0] === id.toString(),
+        (p) => p.offerId === id.toString(),
       )!;
 
       formattedProducts.push({

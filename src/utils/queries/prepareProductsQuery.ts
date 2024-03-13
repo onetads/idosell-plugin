@@ -1,8 +1,13 @@
-const PRODUCTS_IDS_KEY = '%%PRODUCTS_IDS%%';
+import { TAdProduct } from 'types/product';
 
-const GET_PRODUCTS_DATA_QUERY = `
+const extractProductsIds = (products: TAdProduct[]) => {
+  return products.map((product) => product.offerId);
+};
+
+const prepareProductsQuery = (products: TAdProduct[]) => {
+  return `
     query Products {
-        products(searchInput: { productsId: [${PRODUCTS_IDS_KEY}] }) {
+        products(searchInput: { productsId: [${extractProductsIds(products).join(',')}] }) {
             took
             products {
                 id
@@ -33,5 +38,6 @@ const GET_PRODUCTS_DATA_QUERY = `
         }
     }
 `;
+};
 
-export { GET_PRODUCTS_DATA_QUERY, PRODUCTS_IDS_KEY };
+export default prepareProductsQuery;
