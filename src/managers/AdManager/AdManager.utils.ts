@@ -7,6 +7,7 @@ import { TPages } from 'types/pages';
 import getMessage from 'utils/formatters/getMessage';
 import AdManager from 'managers/AdManager/AdManager';
 import getProductsContainer from 'utils/helpers/getProductsContainer';
+import { TAdProduct } from 'types/product';
 
 const initAdManager = (page: TPages | null) => new AdManager(page);
 
@@ -47,4 +48,8 @@ const getProductsIds = (page: TPages) => {
   return productsIds;
 };
 
-export { initAdManager, getProductsIds };
+const extractProductsIds = (products: TAdProduct[]) => {
+  return products.map((product) => product.offerId);
+};
+
+export { initAdManager, getProductsIds, extractProductsIds };

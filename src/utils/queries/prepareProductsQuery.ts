@@ -1,13 +1,7 @@
-import { TAdProduct } from 'types/product';
-
-const extractProductsIds = (products: TAdProduct[]) => {
-  return products.map((product) => product.offerId);
-};
-
-const prepareProductsQuery = (products: TAdProduct[]) => {
+const prepareProductsQuery = (ids: string) => {
   return `
     query Products {
-        products(searchInput: { productsId: [${extractProductsIds(products).join(',')}] }) {
+        products(searchInput: { productsId: [${ids}] }) {
             took
             products {
                 id

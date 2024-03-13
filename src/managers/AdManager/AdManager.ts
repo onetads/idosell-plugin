@@ -4,7 +4,10 @@ import {
   ERROR_PROMOTED_PRODUCTS_MSG,
   REQUEST_TIMED_OUT,
 } from 'consts/messages';
-import { getProductsIds } from 'managers/AdManager/AdManager.utils';
+import {
+  extractProductsIds,
+  getProductsIds,
+} from 'managers/AdManager/AdManager.utils';
 import { TPages } from 'types/pages';
 import { TAdProduct, TProductResponse, TFormattedProduct } from 'types/product';
 import getMessage from 'utils/formatters/getMessage';
@@ -82,7 +85,7 @@ class AdManager {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: prepareProductsQuery(products),
+          query: prepareProductsQuery(extractProductsIds(products).join(',')),
         }),
       },
     );
