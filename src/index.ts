@@ -1,11 +1,6 @@
 import {
-  MAIN_PAGE_HOTSPOT_FOUR,
   MAIN_PAGE_HOTSPOT_ONE,
-  MAIN_PAGE_HOTSPOT_THREE,
-  MAIN_PAGE_HOTSPOT_TWO,
-  PRODUCT_DETAILS_ASSOCIATED_ONE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
-  PRODUCT_LISTING,
   PRODUCT_LISTING_HOTSPOT,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
@@ -15,7 +10,6 @@ import mapConfigPages from 'utils/helpers/mapConfigPages';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 
 window.sponsoredProductConfig = {
-  isLoaderVisible: true,
   tagLabel: 'SPONSOROWANY',
 
   productsListing: {
