@@ -1,4 +1,3 @@
-import { MAIN_PAGE, PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import { PRODUCT_DISABLE_KEY } from 'consts/products';
 import { TEMPLATES_MAP } from 'consts/templates';
 import { TPages } from 'types/pages';
@@ -16,14 +15,7 @@ const checkIsProductAvailable = (product: HTMLElement) => {
 const getMappedTemplate = (page: TPages): ETemplates => {
   const currentPageConfig = window.sponsoredProductConfig[mapConfigPages(page)];
 
-  if (
-    (page === PRODUCT_DETAILS_PAGE || page === MAIN_PAGE) &&
-    'zone' in currentPageConfig
-  ) {
-    return TEMPLATES_MAP[currentPageConfig.zone];
-  }
-
-  return TEMPLATES_MAP[PRODUCTS_LIST];
+  return TEMPLATES_MAP[currentPageConfig.zone];
 };
 
 export { checkIsProductAvailable, getMappedTemplate };

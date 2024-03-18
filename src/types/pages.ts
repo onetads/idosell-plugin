@@ -1,5 +1,6 @@
 import {
   MAIN_PAGE,
+  MAIN_PAGE_HOTSPOT_FOUR,
   MAIN_PAGE_HOTSPOT_ONE,
   MAIN_PAGE_HOTSPOT_THREE,
   MAIN_PAGE_HOTSPOT_TWO,
@@ -7,6 +8,8 @@ import {
   PRODUCT_DETAILS_ASSOCIATED_ONE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
   PRODUCT_DETAILS_PAGE,
+  PRODUCT_LISTING,
+  PRODUCT_LISTING_HOTSPOT,
 } from 'consts/pages';
 
 type TPages =
@@ -21,6 +24,11 @@ type TProductDetailsZones =
 type TMainPageZones =
   | typeof MAIN_PAGE_HOTSPOT_ONE
   | typeof MAIN_PAGE_HOTSPOT_TWO
-  | typeof MAIN_PAGE_HOTSPOT_THREE;
+  | typeof MAIN_PAGE_HOTSPOT_THREE
+  | typeof MAIN_PAGE_HOTSPOT_FOUR;
 
-export type { TPages, TProductDetailsZones, TMainPageZones };
+type TListingPageZones =
+  | typeof PRODUCT_LISTING
+  | typeof PRODUCT_LISTING_HOTSPOT;
+
+export type { TPages, TProductDetailsZones, TMainPageZones, TListingPageZones };

@@ -1,24 +1,22 @@
-import { TMainPageZones, TProductDetailsZones } from 'types/pages';
+import {
+  TListingPageZones,
+  TMainPageZones,
+  TProductDetailsZones,
+} from 'types/pages';
+
+type TPageConfigCreator<TZone> = {
+  isEnabled: boolean;
+  zone: TZone;
+  productsCount: number;
+};
 
 type TSponsoredProductConfig = {
   isLoaderVisible: boolean;
+  tagLabel: string;
 
-  productsListing: {
-    isEnabled: boolean;
-    productsCount: number;
-  };
-
-  pageDetails: {
-    isEnabled: boolean;
-    zone: TProductDetailsZones;
-    productsCount: number;
-  };
-
-  mainPage: {
-    isEnabled: boolean;
-    zone: TMainPageZones;
-    productsCount: number;
-  };
+  productsListing: TPageConfigCreator<TListingPageZones>;
+  pageDetails: TPageConfigCreator<TProductDetailsZones>;
+  mainPage: TPageConfigCreator<TMainPageZones>;
 };
 
 export type { TSponsoredProductConfig };

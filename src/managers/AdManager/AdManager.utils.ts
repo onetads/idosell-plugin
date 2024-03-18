@@ -1,21 +1,20 @@
 import { EMPTY_LIST_WARN } from 'consts/messages';
-import {
-  PRODUCT_ID_EXTRACTOR_KEYS,
-  PRODUCT_ID_SELECTORS,
-} from 'consts/products';
+import {} from 'consts/products';
 import { TPages } from 'types/pages';
 import getMessage from 'utils/formatters/getMessage';
 import AdManager from 'managers/AdManager/AdManager';
-import getProductsContainer from 'utils/helpers/getProductsContainer';
+import getProductsContainerIfExists from 'utils/helpers/getProductsContainerIfExists';
 import { TAdProduct } from 'types/product';
+import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor';
+import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
 
 const initAdManager = (page: TPages | null) => new AdManager(page);
 
 const getProductsIds = (page: TPages) => {
   const { productsContainer, productIdSelector, productIdExtractorKey } = {
-    productsContainer: getProductsContainer(page),
-    productIdSelector: PRODUCT_ID_SELECTORS[page],
-    productIdExtractorKey: PRODUCT_ID_EXTRACTOR_KEYS[page],
+    productsContainer: getProductsContainerIfExists(page),
+    productIdSelector: getProductsIdSelectorIfExists(page),
+    productIdExtractorKey: getProductsIdExtractorIfExists(page),
   };
 
   if (!productsContainer) return [];

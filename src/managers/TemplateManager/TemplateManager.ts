@@ -1,13 +1,10 @@
 import { BASIC_TAG } from 'consts/common';
-import {
-  COULDNT_SAVE_TEMPLATE,
-  PRODUCTS_CONTAINER_NOT_FOUND,
-  SELECTOR_NOT_FOUND,
-} from 'consts/messages';
+import { COULDNT_SAVE_TEMPLATE, SELECTOR_NOT_FOUND } from 'consts/messages';
 import {
   CONTAINER_SELECTORS_TO_DELETE,
   PRODUCT_CLASS,
   PRODUCT_SELECTOR,
+  SLIDER_CLASS,
 } from 'consts/products';
 import { REPLACE_CONTENT_MAP } from 'consts/replaceMap';
 import { CONTENT, PRODUCT_IMAGE_URL_KEY } from 'consts/replaceMap/keys';
@@ -20,11 +17,14 @@ import { TPages } from 'types/pages';
 import { EProductElements } from 'types/product';
 import { ETemplates } from 'types/templates';
 import getMessage from 'utils/formatters/getMessage';
-import getProductsContainer from 'utils/helpers/getProductsContainer';
+import getProductsContainerIfExists from 'utils/helpers/getProductsContainerIfExists';
 
 class TemplateManager {
-  private currentTemplate: ETemplates;
-  private page: TPages;
+  protected page: TPages;
+  protected currentTemplate: ETemplates;
+  protected productsContainer: Element;
+  protected isSlider: boolean;
+
   private templates = Object.keys(ETemplates).reduce(
     (acc, currVal) => ({
       ...acc,
@@ -36,15 +36,21 @@ class TemplateManager {
   constructor(page: TPages) {
     this.page = page;
     this.currentTemplate = getMappedTemplate(page);
+
+    this.productsContainer = getProductsContainerIfExists(page);
+    this.isSlider = this.productsContainer.classList.contains(SLIDER_CLASS);
+
     this.checkDOMforTemplates();
   }
 
   private checkDOMforTemplates = () => {
-    const productsContainer = this.getProductsContainerIfExists();
-
     const products = Array.from(
-      productsContainer.querySelectorAll(PRODUCT_SELECTOR),
+      this.productsContainer.querySelectorAll(PRODUCT_SELECTOR),
     );
+
+    if (this.isSlider) {
+      app_shop.vars.hotspot_slider.destroy();
+    }
 
     for (const product of products) {
       const currentTemplate = this.templates[getMappedTemplate(this.page)];
@@ -63,17 +69,7 @@ class TemplateManager {
     }
   };
 
-  protected getProductsContainerIfExists = () => {
-    const productsContainer = getProductsContainer(this.page);
-
-    if (!productsContainer) {
-      throw new Error(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
-    }
-
-    return productsContainer;
-  };
-
-  protected getCurrentTempalate = () => {
+  protected getCurrentTempalateHTML = () => {
     return this.templates[this.currentTemplate];
   };
 

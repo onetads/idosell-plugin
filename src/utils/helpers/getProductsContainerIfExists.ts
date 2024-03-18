@@ -1,10 +1,17 @@
+import { PRODUCTS_CONTAINER_NOT_FOUND } from 'consts/messages';
 import { PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import { PRODUCT_CONTAINERS } from 'consts/products';
 import { TPages } from 'types/pages';
+import getMessage from 'utils/formatters/getMessage';
 
 const getProductsContainer = (page: TPages) => {
   if (page === PRODUCTS_LIST) {
-    return document.querySelector(PRODUCT_CONTAINERS[page]);
+    const pageListingSupportedZone =
+      window.sponsoredProductConfig.productsListing.zone;
+
+    return document.querySelector(
+      PRODUCT_CONTAINERS[page][pageListingSupportedZone],
+    );
   }
 
   if (page === PRODUCT_DETAILS_PAGE) {
@@ -23,4 +30,14 @@ const getProductsContainer = (page: TPages) => {
   );
 };
 
-export default getProductsContainer;
+const getProductsContainerIfExists = (page: TPages) => {
+  const productsContainer = getProductsContainer(page);
+
+  if (!productsContainer) {
+    throw new Error(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
+  }
+
+  return productsContainer;
+};
+
+export default getProductsContainerIfExists;

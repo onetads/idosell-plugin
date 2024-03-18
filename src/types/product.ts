@@ -1,27 +1,41 @@
 import { MAIN_PAGE, PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
-import { TMainPageZones, TPages, TProductDetailsZones } from 'types/pages';
+import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
+import {
+  TListingPageZones,
+  TMainPageZones,
+  TProductDetailsZones,
+} from 'types/pages';
 
 enum EProductElements {
   ID = 'ID',
   TITLE = 'TITLE',
   PRODUCER = 'PRODUCER',
   PRODUCER_URL = 'PRODUCER_URL',
-  PRICE = 'PRICE',
-  OMNIBUS = 'OMNIBUS',
+  PRICE_MAIN = 'PRICE_MAIN',
+  PRICE_OMNIBUS = 'PRICE_OMNIBUS',
   IMG = 'IMG',
   PRODUCT_LINK = 'PRODUCT_LINK',
-  COMPARE = 'COMPARE',
   DESCRIPTION = 'DESCRIPTION',
+  POINTS = 'POINTS',
+  PRICE_REGULAR = 'PRICE_REGULAR',
 }
 
-type TProductSelectors = Record<TPages, string>;
+type TProductSelectors = {
+  [MAIN_PAGE]: Record<TMainPageZones, string>;
+  [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
+  [PRODUCTS_LIST]: Record<TListingPageZones, string>;
+};
 
-type TProductIdExtractorKeys = Record<TPages, string>;
+type TProductIdExtractorKeys = {
+  [MAIN_PAGE]: Record<TMainPageZones, string>;
+  [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
+  [PRODUCTS_LIST]: Record<TListingPageZones, string>;
+};
 
 type TProductContainers = {
   [MAIN_PAGE]: Record<TMainPageZones, string>;
   [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
-  [PRODUCTS_LIST]: string;
+  [PRODUCTS_LIST]: Record<TListingPageZones, string>;
 };
 
 type TAdProduct = {
@@ -38,6 +52,7 @@ type TProductResponse = {
         description: string;
         id: number;
         name: string;
+        pointsReceive: string;
         price: {
           price: {
             gross: {
@@ -45,6 +60,11 @@ type TProductResponse = {
             };
           };
           omnibusPrice: {
+            gross: {
+              formatted: string;
+            };
+          } | null;
+          crossedPrice: {
             gross: {
               formatted: string;
             };
@@ -69,19 +89,29 @@ type TFormattedProduct = {
   title: string;
   producerName: string;
   producerUrl: string;
-  price: string;
-  omnibus: string;
+  priceMain: string;
+  priceOmnibus: string;
   imageUrl: string;
   link: string;
   description: string;
+  points: string;
+  priceRegular: string;
 };
 
-export {
-  EProductElements,
-  TAdProduct,
+type TCheckProductValueMap = {
+  key: keyof ReturnType<typeof getProductMap>;
+  shouldDelete: (value: string) => boolean;
+  selector: string;
+}[];
+
+export { EProductElements };
+export type {
   TProductSelectors,
   TProductContainers,
   TProductIdExtractorKeys,
   TProductResponse,
+  TAdProduct,
   TFormattedProduct,
+  TCheckProductValueMap,
 };
+

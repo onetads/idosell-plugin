@@ -6,10 +6,10 @@ import {
   PRODUCT_DETAILS_PAGE,
   PRODUCT_DETAILS_PAGE_SELECTOR,
 } from 'consts/pages';
-import { PRODUCT_LIST_SELECTOR } from 'consts/products';
+import { PRODUCT_LISTING_SELECTOR } from 'consts/products';
 
 const getCurrentPageInfo = () => {
-  const productListing = document.querySelector(PRODUCT_LIST_SELECTOR);
+  const productListing = document.querySelector(PRODUCT_LISTING_SELECTOR);
 
   if (productListing) {
     return PRODUCTS_LIST;

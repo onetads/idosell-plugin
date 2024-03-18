@@ -38,6 +38,13 @@ export default {
           return preparedUrl;
         },
       },
+      {
+        selector: '.product .product__compare_item',
+        replace: [CONTENT],
+        prepareValue: () => {
+          return '+ Dodaj do porównania';
+        },
+      },
     ],
   },
 

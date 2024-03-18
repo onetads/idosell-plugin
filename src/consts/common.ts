@@ -1,3 +1,4 @@
 const BASIC_TAG = 'div';
+const DYNAMIC_CONTENT_CHECK_DELAY = 50;
 
-export { BASIC_TAG };
+export { BASIC_TAG, DYNAMIC_CONTENT_CHECK_DELAY };
