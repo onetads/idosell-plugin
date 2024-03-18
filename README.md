@@ -12,7 +12,8 @@ Yarn: v1.22.19
 yarn build - builds minified js (code is bundled to dist/bundle.js file) <br/>
 yarn eslint - checks for eslint errors
 
-# Config
+
+## Config
 
 | Key | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -27,7 +28,7 @@ yarn eslint - checks for eslint errors
 | :-------- | :------- | :------------------------- |
 | `isEnabled` | `boolean` | Specifies whether the product should be visible |
 | `zone` | `string` | Specify zone where product should appear. **See available zones below** |
-| `productsCount` | `number` | Specifies the number of products injected into the list |
+| `productsCount` | `object` | Specifies the number of products injected into the list |
 
 #### Zones
 
@@ -39,6 +40,8 @@ yarn eslint - checks for eslint errors
 
 
 #### Example Config
+
+The configuration object should be assigned to the `sponsoredProductConfig` key in the `window` object before the script initialization.
 
 ```js
 window.sponsoredProductConfig = {
@@ -61,3 +64,4 @@ window.sponsoredProductConfig = {
   },
 };
 ```
+
