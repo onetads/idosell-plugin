@@ -98,7 +98,8 @@ class AdManager {
     const formattedProducts: TFormattedProduct[] = [];
 
     for (const product of productsData.data.products.products) {
-      const { description, id, name, price, producer, sizes } = product;
+      const { description, id, name, price, producer, sizes, pointsReceive } =
+        product;
 
       const isAvailable = sizes.some(
         (item) => item.availability.status !== 'disable',
@@ -115,11 +116,13 @@ class AdManager {
         id: id.toString(),
         imageUrl: imageUrl,
         link: offerUrl,
-        omnibus: price.omnibusPrice?.gross.formatted || '',
-        price: price.price.gross.formatted,
+        priceOmnibus: price.omnibusPrice?.gross?.formatted || '',
+        priceMain: price.price.gross.formatted,
         producerName: producer.name,
         producerUrl: producer.link,
         title: name,
+        points: pointsReceive,
+        priceRegular: price.crossedPrice?.gross?.formatted || '',
       });
     }
 

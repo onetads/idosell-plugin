@@ -4,10 +4,10 @@ import {
   PRODUCT_ID_KEY,
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
-  PRODUCT_OMNIBUS_KEY,
   PRODUCT_POINTS_KEY,
-  PRODUCT_PRICE_KEY,
-  PRODUCT_PRICE_MAX_KEY,
+  PRODUCT_PRICE_MAIN_KEY,
+  PRODUCT_PRICE_OMNIBUS_KEY,
+  PRODUCT_PRICE_REGULAR_KEY,
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
   PRODUCT_TITLE_KEY,
@@ -70,22 +70,22 @@ export default {
     ],
   },
 
-  [EProductElements.PRICE]: {
-    key: PRODUCT_PRICE_KEY,
+  [EProductElements.PRICE_MAIN]: {
+    key: PRODUCT_PRICE_MAIN_KEY,
     map: [
       {
         selector: '.product .price:not(.--points,.--max)',
         replace: [CONTENT],
         prepareValue: (element) => {
-          element.childNodes[0].textContent = PRODUCT_PRICE_KEY;
+          element.childNodes[0].textContent = PRODUCT_PRICE_MAIN_KEY;
           return element.innerHTML;
         },
       },
     ],
   },
 
-  [EProductElements.OMNIBUS]: {
-    key: PRODUCT_OMNIBUS_KEY,
+  [EProductElements.PRICE_OMNIBUS]: {
+    key: PRODUCT_PRICE_OMNIBUS_KEY,
     map: [
       {
         selector: '.product .omnibus_price__value',
@@ -145,8 +145,8 @@ export default {
     ],
   },
 
-  [EProductElements.PRICE_MAX]: {
-    key: PRODUCT_PRICE_MAX_KEY,
+  [EProductElements.PRICE_REGULAR]: {
+    key: PRODUCT_PRICE_REGULAR_KEY,
     map: [
       {
         selector: '.product .--max del',

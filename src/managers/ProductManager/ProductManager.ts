@@ -149,4 +149,3 @@ class ProductManager extends TemplateManager {
 }
 
 export default ProductManager;
-

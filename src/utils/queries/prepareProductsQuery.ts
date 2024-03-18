@@ -7,6 +7,7 @@ const prepareProductsQuery = (ids: string) => {
                 id
                 name
                 description
+                pointsReceive
                 price {
                     omnibusPrice {
                         gross {
@@ -14,6 +15,11 @@ const prepareProductsQuery = (ids: string) => {
                         }
                     }
                     price {
+                        gross {
+                            formatted
+                        }
+                    }
+                    crossedPrice {
                         gross {
                             formatted
                         }
