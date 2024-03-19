@@ -1,33 +1,8 @@
-import {
-  MAIN_PAGE_HOTSPOT_ONE,
-  PRODUCT_DETAILS_ASSOCIATED_TWO,
-  PRODUCT_LISTING_HOTSPOT,
-} from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
 import mapConfigPages from 'utils/helpers/mapConfigPages';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
-
-window.sponsoredProductConfig = {
-  tagLabel: 'SPONSOROWANY',
-
-  productsListing: {
-    zone: PRODUCT_LISTING_HOTSPOT,
-    isEnabled: true,
-    productsCount: 2,
-  },
-  pageDetails: {
-    isEnabled: true,
-    zone: PRODUCT_DETAILS_ASSOCIATED_TWO,
-    productsCount: 2,
-  },
-  mainPage: {
-    isEnabled: false,
-    zone: MAIN_PAGE_HOTSPOT_ONE,
-    productsCount: 5,
-  },
-};
 
 const runApp = async () => {
   try {

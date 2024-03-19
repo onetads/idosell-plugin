@@ -66,6 +66,32 @@ const TAGS_STYLES = {
       }
       `,
   },
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_THREE]: {
+    selector: '.product__icon',
+    styles: `
+      .${TAG_STYLES_CLASS} {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 6px !important;
+
+          ${OVERRIDE_STYLES}
+      }
+      `,
+  },
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_FOUR]: {
+    selector: '.product__icon',
+    styles: `
+      .${TAG_STYLES_CLASS} {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 6px !important;
+
+          ${OVERRIDE_STYLES}
+      }
+      `,
+  },
 
   [ETemplates.MAIN_PAGE_HOTSPOT_ONE]: {
     selector: '.product__icon',
@@ -107,6 +133,20 @@ const TAGS_STYLES = {
       `,
   },
   [ETemplates.MAIN_PAGE_HOTSPOT_FOUR]: {
+    selector: '.product__icon',
+    styles: `
+      .${TAG_STYLES_CLASS} {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 6px;
+
+          ${OVERRIDE_STYLES}
+      }
+      `,
+  },
+
+  [ETemplates.BASKET_PAGE_HOTSPOT]: {
     selector: '.product__icon',
     styles: `
       .${TAG_STYLES_CLASS} {

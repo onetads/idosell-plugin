@@ -1,4 +1,6 @@
 import {
+  BASKET_PAGE,
+  BASKET_PAGE_HOTSPOT,
   MAIN_PAGE,
   MAIN_PAGE_HOTSPOT_FOUR,
   MAIN_PAGE_HOTSPOT_ONE,
@@ -6,6 +8,7 @@ import {
   MAIN_PAGE_HOTSPOT_TWO,
   PRODUCTS_LIST,
   PRODUCT_DETAILS_ASSOCIATED_ONE,
+  PRODUCT_DETAILS_ASSOCIATED_THREE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
   PRODUCT_DETAILS_PAGE,
   PRODUCT_LISTING,
@@ -15,11 +18,13 @@ import {
 type TPages =
   | typeof PRODUCTS_LIST
   | typeof PRODUCT_DETAILS_PAGE
-  | typeof MAIN_PAGE;
+  | typeof MAIN_PAGE
+  | typeof BASKET_PAGE;
 
 type TProductDetailsZones =
   | typeof PRODUCT_DETAILS_ASSOCIATED_ONE
-  | typeof PRODUCT_DETAILS_ASSOCIATED_TWO;
+  | typeof PRODUCT_DETAILS_ASSOCIATED_TWO
+  | typeof PRODUCT_DETAILS_ASSOCIATED_THREE;
 
 type TMainPageZones =
   | typeof MAIN_PAGE_HOTSPOT_ONE
@@ -31,4 +36,12 @@ type TListingPageZones =
   | typeof PRODUCT_LISTING
   | typeof PRODUCT_LISTING_HOTSPOT;
 
-export type { TPages, TProductDetailsZones, TMainPageZones, TListingPageZones };
+type TBasketPageZones = typeof BASKET_PAGE_HOTSPOT;
+
+export type {
+  TPages,
+  TProductDetailsZones,
+  TMainPageZones,
+  TListingPageZones,
+  TBasketPageZones,
+};

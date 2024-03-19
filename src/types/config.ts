@@ -1,4 +1,5 @@
 import {
+  TBasketPageZones,
   TListingPageZones,
   TMainPageZones,
   TProductDetailsZones,
@@ -16,6 +17,7 @@ type TSponsoredProductConfig = {
   productsListing: TPageConfigCreator<TListingPageZones>;
   pageDetails: TPageConfigCreator<TProductDetailsZones>;
   mainPage: TPageConfigCreator<TMainPageZones>;
+  basketPage: TPageConfigCreator<TBasketPageZones>;
 };
 
 export type { TSponsoredProductConfig };
