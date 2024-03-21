@@ -1,6 +1,12 @@
-import { MAIN_PAGE, PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
+import {
+  BASKET_PAGE,
+  MAIN_PAGE,
+  PRODUCTS_LIST,
+  PRODUCT_DETAILS_PAGE,
+} from 'consts/pages';
 import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
 import {
+  TBasketPageZones,
   TListingPageZones,
   TMainPageZones,
   TProductDetailsZones,
@@ -21,18 +27,21 @@ enum EProductElements {
 }
 
 type TProductSelectors = {
+  [BASKET_PAGE]: Record<TBasketPageZones, string>;
   [MAIN_PAGE]: Record<TMainPageZones, string>;
   [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
   [PRODUCTS_LIST]: Record<TListingPageZones, string>;
 };
 
 type TProductIdExtractorKeys = {
+  [BASKET_PAGE]: Record<TBasketPageZones, string>;
   [MAIN_PAGE]: Record<TMainPageZones, string>;
   [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
   [PRODUCTS_LIST]: Record<TListingPageZones, string>;
 };
 
 type TProductContainers = {
+  [BASKET_PAGE]: Record<TBasketPageZones, string>;
   [MAIN_PAGE]: Record<TMainPageZones, string>;
   [PRODUCT_DETAILS_PAGE]: Record<TProductDetailsZones, string>;
   [PRODUCTS_LIST]: Record<TListingPageZones, string>;

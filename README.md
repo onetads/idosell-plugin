@@ -21,8 +21,9 @@ yarn eslint - checks for eslint errors
 | `productsListing` | `object` | Configuration object for **product listing** |
 | `pageDetails` | `object` | Configuration object for **product details page**|
 | `mainPage` | `object` | Configuration object for **main page** |
+| `basketPage` | `object` | Configuration object for **basket page** |
 
-#### Configuration object for product listing, products details and main page
+#### Configuration object for product listing, products details, main page and basket page
 
 | Key | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -35,8 +36,9 @@ yarn eslint - checks for eslint errors
 | Listing | Zones |
 | :-------- | :------- | 
 | `productsListing` | `PRODUCT_LISTING, PRODUCT_LISTING_HOTSPOT` | 
-| `pageDetails` | `PRODUCT_DETAILS_ASSOCIATED_ONE, PRODUCT_DETAILS_ASSOCIATED_TWO` | 
+| `pageDetails` | `PRODUCT_DETAILS_ASSOCIATED_ONE, PRODUCT_DETAILS_ASSOCIATED_TWO, PRODUCT_DETAILS_ASSOCIATED_THREE, PRODUCT_DETAILS_ASSOCIATED_FOUR` | 
 | `mainPage` | `MAIN_PAGE_HOTSPOT_ONE, MAIN_PAGE_HOTSPOT_TWO, MAIN_PAGE_HOTSPOT_THREE, MAIN_PAGE_HOTSPOT_FOUR` | 
+| `basketPage` | `BASKET_PAGE_HOTSPOT` | 
 
 
 #### Example Config
@@ -45,7 +47,7 @@ The configuration object should be assigned to the `sponsoredProductConfig` key 
 
 ```js
 window.sponsoredProductConfig = {
-  tagLabel: 'SPONSOROWANY',
+  tagLabel: 'SPONSORED',
 
   productsListing: {
     zone: 'PRODUCT_LISTING_HOTSPOT',
@@ -54,14 +56,20 @@ window.sponsoredProductConfig = {
   },
   pageDetails: {
     isEnabled: true,
-    zone: 'PRODUCT_DETAILS_ASSOCIATED_TWO',
-    productsCount: 2,
-  },
-  mainPage: {
-    isEnabled: false,
-    zone: 'MAIN_PAGE_HOTSPOT_ONE',
+    zone: 'PRODUCT_DETAILS_ASSOCIATED_ONE',
     productsCount: 5,
   },
+  mainPage: {
+    isEnabled: true,
+    zone: 'MAIN_PAGE_HOTSPOT_FOUR',
+    productsCount: 2,
+  },
+  basketPage: {
+    isEnabled: true,
+    zone: 'BASKET_PAGE_HOTSPOT',
+    productsCount: 2,
+  },
 };
+
 ```
 

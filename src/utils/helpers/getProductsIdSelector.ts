@@ -1,5 +1,5 @@
 import { PRODUCTS_ID_SELECTOR_NOT_FOUND } from 'consts/messages';
-import { PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
+import { BASKET_PAGE, PRODUCTS_LIST, PRODUCT_DETAILS_PAGE } from 'consts/pages';
 import { PRODUCT_ID_SELECTORS } from 'consts/products';
 import { TPages } from 'types/pages';
 import getMessage from 'utils/formatters/getMessage';
@@ -15,6 +15,13 @@ const getProductsIdSelector = (page: TPages) => {
   if (page === PRODUCT_DETAILS_PAGE) {
     const pageDetailsSupportedZone =
       window.sponsoredProductConfig.pageDetails.zone;
+
+    return PRODUCT_ID_SELECTORS[page][pageDetailsSupportedZone];
+  }
+
+  if (page === BASKET_PAGE) {
+    const pageDetailsSupportedZone =
+      window.sponsoredProductConfig.basketPage.zone;
 
     return PRODUCT_ID_SELECTORS[page][pageDetailsSupportedZone];
   }
