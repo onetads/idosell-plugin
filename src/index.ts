@@ -2,7 +2,6 @@ import {
   MAIN_PAGE_HOTSPOT_ONE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
   PRODUCT_LISTING,
-  PRODUCT_LISTING_HOTSPOT,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
