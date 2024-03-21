@@ -1,4 +1,6 @@
 import {
+  BASKET_PAGE,
+  BASKET_PAGE_SELECTOR,
   MAIN_PAGE,
   MAIN_PAGE_CONTAINER_CLASS,
   MAIN_PAGE_SELECTOR,
@@ -30,6 +32,12 @@ const getCurrentPageInfo = () => {
     mainPageContainer.classList.contains(MAIN_PAGE_CONTAINER_CLASS)
   ) {
     return MAIN_PAGE;
+  }
+
+  const basketPage = document.querySelector(BASKET_PAGE_SELECTOR);
+
+  if (basketPage) {
+    return BASKET_PAGE;
   }
 };
 

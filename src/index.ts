@@ -1,4 +1,5 @@
 import {
+  BASKET_PAGE_HOTSPOT,
   MAIN_PAGE_HOTSPOT_ONE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
   PRODUCT_LISTING,
@@ -26,6 +27,11 @@ window.sponsoredProductConfig = {
   mainPage: {
     isEnabled: true,
     zone: MAIN_PAGE_HOTSPOT_ONE,
+    productsCount: 5,
+  },
+  basketPage: {
+    isEnabled: true,
+    zone: BASKET_PAGE_HOTSPOT,
     productsCount: 5,
   },
 };

@@ -7,10 +7,14 @@ const waitForDynamicContent = async (page: TPages) =>
     const intervalId = setInterval(() => {
       try {
         const currentProductsContainer = getProductsContainerIfExists(page);
-        const parentProductsContainer =
+        const parentProductsContainer = currentProductsContainer.parentElement!;
+        const grandParentProductsContainer =
           currentProductsContainer.parentElement!.parentElement!;
 
-        if (parentProductsContainer.dataset.ajaxload !== 'true') {
+        if (
+          grandParentProductsContainer.dataset.ajaxload !== 'true' &&
+          parentProductsContainer.dataset.ajaxload !== 'true'
+        ) {
           clearInterval(intervalId);
           resolve();
         }
