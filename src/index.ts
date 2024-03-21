@@ -1,11 +1,13 @@
 import {
   MAIN_PAGE_HOTSPOT_ONE,
   PRODUCT_DETAILS_ASSOCIATED_TWO,
+  PRODUCT_LISTING,
   PRODUCT_LISTING_HOTSPOT,
 } from 'consts/pages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
+import { showLoadingSpinner } from 'utils/helpers/loadingSpinner';
 import mapConfigPages from 'utils/helpers/mapConfigPages';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 
@@ -13,7 +15,7 @@ window.sponsoredProductConfig = {
   tagLabel: 'SPONSOROWANY',
 
   productsListing: {
-    zone: PRODUCT_LISTING_HOTSPOT,
+    zone: PRODUCT_LISTING,
     isEnabled: true,
     productsCount: 2,
   },
@@ -23,11 +25,13 @@ window.sponsoredProductConfig = {
     productsCount: 2,
   },
   mainPage: {
-    isEnabled: false,
+    isEnabled: true,
     zone: MAIN_PAGE_HOTSPOT_ONE,
     productsCount: 5,
   },
 };
+
+showLoadingSpinner();
 
 const runApp = async () => {
   try {
@@ -44,8 +48,8 @@ const runApp = async () => {
     const AdManager = initAdManager(page);
     const products = await AdManager.getPromotedProducts();
 
-    const productManager = initProductManager(page);
-    productManager.injectProduct(products);
+    const ProductManager = initProductManager(page);
+    ProductManager.injectProduct(products);
   } catch (e) {
     if (e instanceof Error) {
       console.error(e.message);
