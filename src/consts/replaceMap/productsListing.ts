@@ -25,10 +25,12 @@ export default {
       },
       {
         selector: '.product .product__icon',
+        canBeNull: true,
         replace: ['data-product-id'],
       },
       {
         selector: '.product .product__compare_item',
+        canBeNull: true,
         replace: ['href'],
         prepareValue: (element) => {
           const preparedUrl = (element as HTMLAnchorElement).href
@@ -40,6 +42,7 @@ export default {
       },
       {
         selector: '.product .product__compare_item',
+        canBeNull: true,
         replace: [CONTENT],
         prepareValue: () => {
           return '+ Dodaj do porównania';
@@ -53,10 +56,12 @@ export default {
     map: [
       {
         selector: '.product .product__icon',
+        canBeNull: true,
         replace: ['title'],
       },
       {
         selector: '.product .product__icon img',
+        canBeNull: true,
         replace: ['alt'],
       },
       {
@@ -118,10 +123,12 @@ export default {
     map: [
       {
         selector: '.product .product__icon img',
+        canBeNull: true,
         replace: ['src'],
       },
       {
         selector: '.product .product__icon source',
+        canBeNull: true,
         replace: ['srcset'],
       },
     ],
@@ -132,6 +139,7 @@ export default {
     map: [
       {
         selector: '.product .product__icon',
+        canBeNull: true,
         replace: ['href'],
       },
       {

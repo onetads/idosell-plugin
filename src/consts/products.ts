@@ -117,9 +117,22 @@ const PRODUCT_ID_EXTRACTOR_KEYS: TProductIdExtractorKeys = {
   },
 };
 
-const CONTAINER_SELECTORS_TO_DELETE = ['.product__traits', '.label_icons'];
+const CONTAINER_SELECTORS_TO_DELETE = [
+  '.product__traits',
+  '.label_icons',
+  '.product__details',
+  '.product__availability',
+  '.product__yousave',
+  '.product__versions',
+  '.addToWishlist',
+  '.product__comments',
+  '.product__opins',
+  '.product__ajax_delivery',
+];
 
-const SLIDER_CLASS = '--slider';
+const SLIDER_CLASS_ONE = '--slider';
+const SLIDER_CLASS_TWO = 'slick-slider';
+const SLIDER_CLONED_CLASS = 'slick-cloned';
 
 export {
   PRODUCT_LISTING_SELECTOR,
@@ -132,5 +145,7 @@ export {
   PRODUCT_ID_EXTRACTOR_KEYS,
   PRODUCT_SELECTOR,
   CONTAINER_SELECTORS_TO_DELETE,
-  SLIDER_CLASS,
+  SLIDER_CLASS_ONE,
+  SLIDER_CLASS_TWO,
+  SLIDER_CLONED_CLASS,
 };

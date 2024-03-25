@@ -1,10 +1,15 @@
 import { BASIC_TAG } from 'consts/common';
-import { COULDNT_SAVE_TEMPLATE, SELECTOR_NOT_FOUND } from 'consts/messages';
+import {
+  COULDNT_SAVE_TEMPLATE,
+  EMPTY_PRODUCTS_ID_LIST,
+  SELECTOR_NOT_FOUND,
+} from 'consts/messages';
 import {
   CONTAINER_SELECTORS_TO_DELETE,
   PRODUCT_CLASS,
   PRODUCT_SELECTOR,
-  SLIDER_CLASS,
+  SLIDER_CLASS_ONE,
+  SLIDER_CLASS_TWO,
 } from 'consts/products';
 import { REPLACE_CONTENT_MAP } from 'consts/replaceMap';
 import { CONTENT, PRODUCT_IMAGE_URL_KEY } from 'consts/replaceMap/keys';
@@ -38,7 +43,9 @@ class TemplateManager {
     this.currentTemplate = getMappedTemplate(page);
 
     this.productsContainer = getProductsContainerIfExists(page);
-    this.isSlider = this.productsContainer.classList.contains(SLIDER_CLASS);
+    this.isSlider =
+      this.productsContainer.classList.contains(SLIDER_CLASS_ONE) ||
+      this.productsContainer.classList.contains(SLIDER_CLASS_TWO);
 
     this.checkDOMforTemplates();
   }
@@ -48,8 +55,8 @@ class TemplateManager {
       this.productsContainer.querySelectorAll(PRODUCT_SELECTOR),
     );
 
-    if (this.isSlider) {
-      app_shop.vars.hotspot_slider.destroy();
+    if (!products.length) {
+      throw new Error(getMessage(EMPTY_PRODUCTS_ID_LIST));
     }
 
     for (const product of products) {

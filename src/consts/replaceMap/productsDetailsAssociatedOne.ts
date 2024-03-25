@@ -118,6 +118,7 @@ export default {
       },
       {
         selector: '.product .product__see',
+        canBeNull: true,
         replace: ['href'],
       },
     ],
