@@ -9,7 +9,9 @@ import mapConfigPages from 'utils/helpers/mapConfigPages';
 import waitForDlApi from 'utils/helpers/waitForDlApi';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 
-showLoadingSpinner();
+if (window.sponsoredProductConfig.isLoaderVisible) {
+  showLoadingSpinner();
+}
 
 const runApp = async () => {
   try {
