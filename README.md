@@ -19,6 +19,7 @@ yarn eslint - checks for eslint errors
 | :-------- | :------- | :------------------------- |
 | `tagLabel` | `string` | Text for sponsored tag in product card |
 | `productsListing` | `object` | Configuration object for **product listing** |
+| `isLoaderVisible` | `boolean` | Define whether the loader should be displayed |
 | `pageDetails` | `object` | Configuration object for **product details page**|
 | `mainPage` | `object` | Configuration object for **main page** |
 | `basketPage` | `object` | Configuration object for **basket page** |
@@ -48,6 +49,7 @@ The configuration object should be assigned to the `sponsoredProductConfig` key 
 ```js
 window.sponsoredProductConfig = {
   tagLabel: 'SPONSORED',
+  isLoaderVisible: true,
 
   productsListing: {
     zone: 'PRODUCT_LISTING_HOTSPOT',

@@ -5,7 +5,7 @@ const MAIN_PAGE = 'MAIN_PAGE';
 
 const PRODUCT_DETAILS_PAGE_SELECTOR = '#projector_form';
 const BASKET_PAGE_SELECTOR = '#Basket';
-const MAIN_PAGE_SELECTOR = '#container';
+const MAIN_PAGE_SELECTOR = '.main_page';
 const MAIN_PAGE_CONTAINER_CLASS = 'main_page';
 
 // Basket zones

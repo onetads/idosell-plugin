@@ -7,6 +7,9 @@ const SELECTOR_NOT_FOUND = 'SELECTOR_NOT_FOUND';
 const ERROR_PROMOTED_PRODUCTS_MSG = 'ERROR_PROMOTED_PRODUCTS_MSG';
 const REQUEST_TIMED_OUT = 'REQUEST_TIMED_OUT';
 const COULDNT_FETCH_PRODUCTS_DATA = 'COULDNT_FETCH_PRODUCTS_DATA';
+const FETCHING_DLAPI_TOOK_TOO_LONG = 'FETCHING_DLAPI_TOOK_TOO_LONG';
+const TEMPLATE_NOT_VALID = 'TEMPLATE_NOT_VALID';
+const EMPTY_PRODUCTS_ID_LIST = 'EMPTY_PRODUCTS_ID_LIST';
 
 const messagesMap = {
   [EMPTY_LIST_WARN]: "List is empty or product selector doesn't match",
@@ -21,6 +24,10 @@ const messagesMap = {
     'Somethimg wemt wrong while fetching products data',
   [PRODUCTS_ID_EXTRACTOR_NOT_FOUND]: 'Products id extractor not found',
   [PRODUCTS_ID_SELECTOR_NOT_FOUND]: 'Products id selector not found',
+  [FETCHING_DLAPI_TOOK_TOO_LONG]: 'Fetching dlApi took too long',
+  [TEMPLATE_NOT_VALID]: 'Template is not valid',
+  [EMPTY_PRODUCTS_ID_LIST]:
+    'List of products ids is empty - probably script couldnt find any products by ids selector',
 };
 
 export {
@@ -34,4 +41,7 @@ export {
   COULDNT_FETCH_PRODUCTS_DATA,
   PRODUCTS_ID_EXTRACTOR_NOT_FOUND,
   PRODUCTS_ID_SELECTOR_NOT_FOUND,
+  FETCHING_DLAPI_TOOK_TOO_LONG,
+  TEMPLATE_NOT_VALID,
+  EMPTY_PRODUCTS_ID_LIST,
 };

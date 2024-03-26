@@ -101,6 +101,8 @@ class AdManager {
       const { description, id, name, price, producer, sizes, pointsReceive } =
         product;
 
+      if (!sizes) continue;
+
       const isAvailable = sizes.some(
         (item) => item.availability.status !== 'disable',
       );
@@ -108,7 +110,7 @@ class AdManager {
       if (!isAvailable) continue;
 
       const { imageUrl, offerUrl } = products.find(
-        (p) => p.offerId === id.toString(),
+        (p) => p.offerId.toString() === id.toString(),
       )!;
 
       formattedProducts.push({

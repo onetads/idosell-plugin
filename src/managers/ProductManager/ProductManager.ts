@@ -1,3 +1,4 @@
+import { SLIDER_CLONED_CLASS } from 'consts/products';
 import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
@@ -9,6 +10,7 @@ import { TPages } from 'types/pages';
 import { TCheckProductValueMap, TFormattedProduct } from 'types/product';
 import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor';
 import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
+import getSliderContainerSelector from 'utils/helpers/getSliderContainerSelector';
 import mapConfigPages from 'utils/helpers/mapConfigPages';
 
 class ProductManager extends TemplateManager {
@@ -101,7 +103,7 @@ class ProductManager extends TemplateManager {
     if (this.isSlider) {
       // override productsContainer to be the actual container of slider items
       productsContainer = this.productsContainer.querySelector(
-        '.products',
+        '.slick-track',
       ) as HTMLDivElement;
     }
 
@@ -112,20 +114,20 @@ class ProductManager extends TemplateManager {
       if (index >= productsCount) break;
 
       const productElement = document.createElement('div');
-      let productTemaplateHTML = this.templateHTML;
+      let productTemplateHTML = this.templateHTML;
 
       const mappedProductValues = getProductMap(product);
 
       for (const key in mappedProductValues) {
         const objKey = key as keyof typeof mappedProductValues;
 
-        productTemaplateHTML = productTemaplateHTML.replaceAll(
+        productTemplateHTML = productTemplateHTML.replaceAll(
           new RegExp(key, 'g'),
-          mappedProductValues[objKey].toString(),
+          mappedProductValues[objKey]?.toString(),
         );
       }
 
-      productElement.innerHTML = productTemaplateHTML;
+      productElement.innerHTML = productTemplateHTML;
       const preparedElement = productElement.firstChild as HTMLDivElement;
 
       this.deleteExistingProduct(product.id);
@@ -139,11 +141,14 @@ class ProductManager extends TemplateManager {
         tagStyles.selector,
       );
 
+      taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       productsContainer.prepend(taggedProductElement);
     }
 
     if (this.isSlider) {
-      app_shop.vars.hotspot_slider.init();
+      $(`${getSliderContainerSelector(this.page)} .products`).each(function () {
+        $(this).slick('reinit');
+      });
     }
   };
 }
