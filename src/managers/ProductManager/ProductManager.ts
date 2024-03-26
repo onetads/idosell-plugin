@@ -3,7 +3,7 @@ import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
 } from 'consts/replaceMap/keys';
-import { TAGS_STYLES, TAG_STYLES_CLASS } from 'consts/tags';
+import { DSA_ICON, TAGS_STYLES, TAG_STYLES_CLASS } from 'consts/tags';
 import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
 import TemplateManager from 'managers/TemplateManager/TemplateManager';
 import { TPages } from 'types/pages';
@@ -94,7 +94,7 @@ class ProductManager extends TemplateManager {
       sponsoredLabelLink.style.pointerEvents = 'auto';
       sponsoredLabelLink.href = dsaUrl;
       sponsoredLabelLink.target = '_blank';
-      sponsoredLabelLink.innerHTML = 'ⓘ';
+      sponsoredLabelLink.innerHTML = DSA_ICON;
 
       labelElementContainer.appendChild(sponsoredLabelLink);
     }
