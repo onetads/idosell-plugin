@@ -109,7 +109,7 @@ class AdManager {
 
       if (!isAvailable) continue;
 
-      const { imageUrl, offerUrl } = products.find(
+      const { imageUrl, offerUrl, dsaUrl } = products.find(
         (p) => p.offerId.toString() === id.toString(),
       )!;
 
@@ -125,6 +125,7 @@ class AdManager {
         title: name,
         points: pointsReceive,
         priceRegular: price.crossedPrice?.gross?.formatted || '',
+        dsaUrl,
       });
     }
 
