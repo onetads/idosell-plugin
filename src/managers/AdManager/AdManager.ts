@@ -125,7 +125,7 @@ class AdManager {
         title: name,
         points: pointsReceive,
         priceRegular: price.crossedPrice?.gross?.formatted || '',
-        dsaUrl,
+        dsaUrl: dsaUrl,
       });
     }
 
