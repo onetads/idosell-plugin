@@ -3,7 +3,7 @@ import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
 } from 'consts/replaceMap/keys';
-import { TAGS_STYLES, TAG_STYLES_CLASS } from 'consts/tags';
+import { DSA_ICON, TAGS_STYLES, TAG_STYLES_CLASS } from 'consts/tags';
 import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
 import TemplateManager from 'managers/TemplateManager/TemplateManager';
 import { TPages } from 'types/pages';
@@ -77,13 +77,29 @@ class ProductManager extends TemplateManager {
   private addTagToProductElement = (
     productElement: Element,
     selector: string,
+    dsaUrl: string | undefined,
   ) => {
-    const labelElement = document.createElement('p');
-    labelElement.classList.add(TAG_STYLES_CLASS);
-    labelElement.classList.add('product__name');
-    labelElement.textContent = window.sponsoredProductConfig.tagLabel;
+    const labelElementContainer = document.createElement('p');
+    labelElementContainer.classList.add(TAG_STYLES_CLASS);
+    labelElementContainer.classList.add('product__name');
 
-    productElement.querySelector(selector)?.prepend(labelElement);
+    const labelElement = document.createElement('span');
+    labelElement.textContent = window.sponsoredProductConfig.tagLabel;
+    labelElementContainer.appendChild(labelElement);
+
+    if (dsaUrl) {
+      const sponsoredLabelLink = document.createElement('a');
+      sponsoredLabelLink.style.marginLeft = '4px';
+      sponsoredLabelLink.style.textDecoration = 'none';
+      sponsoredLabelLink.style.pointerEvents = 'auto';
+      sponsoredLabelLink.href = dsaUrl;
+      sponsoredLabelLink.target = '_blank';
+      sponsoredLabelLink.innerHTML = DSA_ICON;
+
+      labelElementContainer.appendChild(sponsoredLabelLink);
+    }
+
+    productElement.querySelector(selector)?.prepend(labelElementContainer);
 
     return productElement;
   };
@@ -139,6 +155,7 @@ class ProductManager extends TemplateManager {
       const taggedProductElement = this.addTagToProductElement(
         cleanedProductElement,
         tagStyles.selector,
+        product.dsaUrl,
       );
 
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);

@@ -51,7 +51,7 @@ type TAdProduct = {
   offerId: string;
   imageUrl: string;
   offerUrl: string;
-  dsaUrl: string;
+  dsaUrl: string | undefined;
 };
 
 type TProductResponse = {
@@ -105,6 +105,7 @@ type TFormattedProduct = {
   description: string;
   points: string;
   priceRegular: string;
+  dsaUrl: string | undefined;
 };
 
 type TCheckProductValueMap = {
