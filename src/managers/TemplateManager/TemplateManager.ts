@@ -76,10 +76,15 @@ class TemplateManager {
     }
   };
 
-  protected getCurrentTempalateHTML = () => {
-    return this.templates[this.currentTemplate];
-  };
+  protected getCurrentTemplateHTML = () => {
+    const currentTemplate = this.templates[this.currentTemplate];
 
+    if (currentTemplate === NOT_VALID_TEMPLATE) {
+      throw new Error(NOT_VALID_TEMPLATE);
+    }
+
+    return currentTemplate;
+  };
   private saveTemplateInSessionStorage = (productElement: HTMLElement) => {
     if (!this.currentTemplate) {
       throw new Error(getMessage(COULDNT_SAVE_TEMPLATE));

@@ -1,5 +1,5 @@
-const LOADING_SPINNER_CONTAINER_CLASS = 'onet-ads-loading-spinner-container';
-const LOADING_SPINNER_CLASS = 'onet-ads-loading-spinner';
+const LOADING_SPINNER_CONTAINER_CLASS = 'onet-loading-spinner-container';
+const LOADING_SPINNER_CLASS = 'onet-loading-spinner';
 
 const LOADING_SPINNER_CONTAINER_STYLES = `
     top: 0;

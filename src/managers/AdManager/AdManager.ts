@@ -4,12 +4,11 @@ import {
   ERROR_PROMOTED_PRODUCTS_MSG,
   REQUEST_TIMED_OUT,
 } from 'consts/messages';
-import {
-  extractProductsIds,
-  getProductsIds,
-} from 'managers/AdManager/AdManager.utils';
+import { SPONSORED_PRODUCT_TAG } from 'consts/products';
+import { getProductsIds } from 'managers/AdManager/AdManager.utils';
+import { TFetchNativeAdProductItem } from 'types/dlApi';
 import { TPages } from 'types/pages';
-import { TAdProduct, TProductResponse, TFormattedProduct } from 'types/product';
+import { TProductResponse, TFormattedProduct } from 'types/product';
 import getMessage from 'utils/formatters/getMessage';
 import prepareProductsQuery from 'utils/queries/prepareProductsQuery';
 
@@ -25,11 +24,9 @@ class AdManager {
     }
   }
 
-  public getPromotedProducts = async () => {
+  public getPromotedProducts = async (productsCount: number) => {
     if (!dlApi.fetchNativeAd)
       throw new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
-
-    let products: TAdProduct[] | null | Error = null;
 
     const timeoutPromise = new Promise<void>((_, reject) => {
       setTimeout(() => {
@@ -37,46 +34,68 @@ class AdManager {
       }, MAX_TIMEOUT_MS);
     });
 
-    const fetchNativeAd = new Promise<TAdProduct[]>((resolve, reject) => {
-      dlApi.cmd = dlApi.cmd || [];
-      dlApi.cmd.push(async (dlApiObj) => {
-        try {
-          const ads = await dlApiObj.fetchNativeAd!({
-            slot: SLOT_NAME,
-            opts: {
-              offer_ids: this.productsIds.join(','),
-            },
-            tplCode: TPL_CODE,
-          });
+    const fetchNativeAd = new Promise<TFormattedProduct[]>(
+      (resolve, reject) => {
+        const products: TFormattedProduct[] = [];
 
-          const trackingAdLink = ads.meta.adclick;
-          const dsaUrl = ads.meta.dsaurl;
-          const { offers = [] } = ads.fields.feed;
+        dlApi.cmd = dlApi.cmd || [];
+        dlApi.cmd.push(async (dlApiObj) => {
+          try {
+            for (let index = 1; index <= productsCount; index++) {
+              const ads = await dlApiObj.fetchNativeAd!({
+                slot: SLOT_NAME,
+                opts: {
+                  offer_ids: this.productsIds.join(','),
+                  pos: index,
+                  asyncRender: true,
+                  div: SPONSORED_PRODUCT_TAG + index,
+                },
+                tplCode: TPL_CODE,
+              });
 
-          products = offers.map(({ offer_id, offer_image, offer_url }) => ({
-            offerId: offer_id,
-            imageUrl: offer_image,
-            offerUrl: trackingAdLink + offer_url,
-            dsaUrl: dsaUrl,
-          }));
+              const trackingAdLink = ads.meta.adclick;
+              const dsaUrl = ads.meta.dsaurl;
+              const { offers = [] } = ads.fields.feed;
 
-          resolve(products);
-        } catch (_) {
-          reject(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
-        }
-      });
-    });
+              const offerData = offers[0];
+
+              const productData = await this.prepareProductsData(
+                offerData,
+                trackingAdLink,
+                dsaUrl,
+              );
+
+              if (productData) {
+                ads.render();
+                products.push({
+                  ...productData,
+                  div: SPONSORED_PRODUCT_TAG + index,
+                });
+              }
+            }
+
+            resolve(products);
+          } catch {
+            reject(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
+          }
+        });
+      },
+    );
 
     return (await Promise.race([fetchNativeAd, timeoutPromise])
       .then((result) => {
-        return this.prepareProductsData(result as TAdProduct[]);
+        return result;
       })
       .catch((error) => {
         throw new Error(error);
       })) as TFormattedProduct[];
   };
 
-  private prepareProductsData = async (products: TAdProduct[]) => {
+  private prepareProductsData = async (
+    product: TFetchNativeAdProductItem,
+    trackingAdLink: string,
+    dsaUrl: string | undefined,
+  ) => {
     const productsResponse = await fetch(
       `${window.location.origin}/graphql/v1/`,
       {
@@ -85,7 +104,7 @@ class AdManager {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: prepareProductsQuery(extractProductsIds(products).join(',')),
+          query: prepareProductsQuery(product.offer_id),
         }),
       },
     );
@@ -94,42 +113,44 @@ class AdManager {
       throw new Error(getMessage(COULDNT_FETCH_PRODUCTS_DATA));
     }
 
-    const productsData = (await productsResponse.json()) as TProductResponse;
-    const formattedProducts: TFormattedProduct[] = [];
+    const fetchedProductData =
+      (await productsResponse.json()) as TProductResponse;
 
-    for (const product of productsData.data.products.products) {
-      const { description, id, name, price, producer, sizes, pointsReceive } =
-        product;
+    const nestedProductsData = fetchedProductData.data.products.products;
 
-      if (!sizes) continue;
+    if (!nestedProductsData) return;
 
-      const isAvailable = sizes.some(
-        (item) => item.availability.status !== 'disable',
-      );
+    const productData = nestedProductsData[0];
 
-      if (!isAvailable) continue;
+    if (!productData) return;
 
-      const { imageUrl, offerUrl, dsaUrl } = products.find(
-        (p) => p.offerId.toString() === id.toString(),
-      )!;
+    const { description, id, name, price, producer, sizes, pointsReceive } =
+      productData;
 
-      formattedProducts.push({
-        description,
-        id: id.toString(),
-        imageUrl: imageUrl,
-        link: offerUrl,
-        priceOmnibus: price.omnibusPrice?.gross?.formatted || '',
-        priceMain: price.price.gross.formatted,
-        producerName: producer.name,
-        producerUrl: producer.link,
-        title: name,
-        points: pointsReceive,
-        priceRegular: price.crossedPrice?.gross?.formatted || '',
-        dsaUrl: dsaUrl,
-      });
-    }
+    if (!sizes) return;
 
-    return formattedProducts;
+    const isAvailable = sizes.some(
+      (item) => item.availability.status !== 'disable',
+    );
+
+    if (!isAvailable) return;
+
+    const { offer_image, offer_url } = product;
+
+    return {
+      description,
+      id: id.toString(),
+      imageUrl: offer_image,
+      link: trackingAdLink + offer_url,
+      priceOmnibus: price.omnibusPrice?.gross?.formatted || '',
+      priceMain: price.price.gross.formatted,
+      producerName: producer.name,
+      producerUrl: producer.link,
+      title: name,
+      points: pointsReceive,
+      priceRegular: price.crossedPrice?.gross?.formatted || '',
+      dsaUrl: dsaUrl,
+    };
   };
 }
 export default AdManager;

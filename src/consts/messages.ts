@@ -18,16 +18,16 @@ const messagesMap = {
     'Something went wrong while saving template in session storage',
   [SELECTOR_NOT_FOUND]: 'Selector not found: ',
   [ERROR_PROMOTED_PRODUCTS_MSG]:
-    'An error occured while fetching promoted products',
+    'An error occurred while fetching promoted products',
   [REQUEST_TIMED_OUT]: 'Request timed out',
   [COULDNT_FETCH_PRODUCTS_DATA]:
-    'Somethimg wemt wrong while fetching products data',
+    'Something wemt wrong while fetching products data',
   [PRODUCTS_ID_EXTRACTOR_NOT_FOUND]: 'Products id extractor not found',
   [PRODUCTS_ID_SELECTOR_NOT_FOUND]: 'Products id selector not found',
   [FETCHING_DLAPI_TOOK_TOO_LONG]: 'Fetching dlApi took too long',
   [TEMPLATE_NOT_VALID]: 'Template is not valid',
   [EMPTY_PRODUCTS_ID_LIST]:
-    'List of products ids is empty - probably script couldnt find any products by ids selector',
+    "List of products ids is empty - probably script couldn't find any products by ids selector",
 };
 
 export {
