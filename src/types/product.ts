@@ -106,6 +106,7 @@ type TFormattedProduct = {
   points: string;
   priceRegular: string;
   dsaUrl: string | undefined;
+  div: string;
 };
 
 type TCheckProductValueMap = {

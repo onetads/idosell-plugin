@@ -3,21 +3,22 @@ import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
 } from 'consts/replaceMap/keys';
-import { DSA_ICON, TAGS_STYLES, TAG_STYLES_CLASS } from 'consts/tags';
+import { DSA_ICON, LABEL_CLASS, LABEL_CONTAINER_CLASS } from 'consts/tags';
 import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
 import TemplateManager from 'managers/TemplateManager/TemplateManager';
+import { getMappedTemplate } from 'managers/TemplateManager/TemplateManager.utils';
 import { TPages } from 'types/pages';
 import { TCheckProductValueMap, TFormattedProduct } from 'types/product';
+import { ETemplates } from 'types/templates';
 import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor';
 import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
 import getSliderContainerSelector from 'utils/helpers/getSliderContainerSelector';
-import mapConfigPages from 'utils/helpers/mapConfigPages';
 
 class ProductManager extends TemplateManager {
   constructor(page: TPages) {
     super(page);
 
-    this.templateHTML = this.getCurrentTempalateHTML();
+    this.templateHTML = this.getCurrentTemplateHTML();
   }
 
   private templateHTML: string;
@@ -76,45 +77,54 @@ class ProductManager extends TemplateManager {
 
   private addTagToProductElement = (
     productElement: Element,
-    selector: string,
     dsaUrl: string | undefined,
   ) => {
-    const labelElementContainer = document.createElement('p');
-    labelElementContainer.classList.add(TAG_STYLES_CLASS);
-    labelElementContainer.classList.add('product__name');
+    const labelElementContainer = document.createElement('strong');
+    labelElementContainer.classList.add(LABEL_CONTAINER_CLASS);
+    labelElementContainer.style.alignSelf = 'flex-start';
 
     const labelElement = document.createElement('span');
     labelElement.textContent = window.sponsoredProductConfig.tagLabel;
+    labelElement.className = LABEL_CLASS;
     labelElementContainer.appendChild(labelElement);
 
     if (dsaUrl) {
       const sponsoredLabelLink = document.createElement('a');
       sponsoredLabelLink.style.marginLeft = '4px';
+      sponsoredLabelLink.style.color = 'inherit';
+      sponsoredLabelLink.style.fontSize = 'inherit';
       sponsoredLabelLink.style.textDecoration = 'none';
       sponsoredLabelLink.style.pointerEvents = 'auto';
-      sponsoredLabelLink.href = dsaUrl;
+      sponsoredLabelLink.href = 'asd';
       sponsoredLabelLink.target = '_blank';
       sponsoredLabelLink.innerHTML = DSA_ICON;
 
-      labelElementContainer.appendChild(sponsoredLabelLink);
+      labelElement.appendChild(sponsoredLabelLink);
     }
 
-    productElement.querySelector(selector)?.prepend(labelElementContainer);
+    if (
+      getMappedTemplate(this.page) === ETemplates.PRODUCT_DETAILS_ASSOCIATED_ONE
+    ) {
+      const productNameContainer = productElement.querySelector(
+        '.product__name',
+      )?.parentElement as HTMLDivElement;
+
+      productNameContainer.prepend(labelElementContainer);
+    } else {
+      const productIconContainer = productElement.querySelector(
+        '.product__icon',
+      ) as HTMLDivElement;
+
+      productIconContainer.style.flexDirection = 'column';
+
+      productIconContainer.append(labelElementContainer);
+    }
 
     return productElement;
   };
 
-  private injectTagStyles = (styles: string) => {
-    const stylesElement = document.createElement('style');
-    stylesElement.innerHTML = styles;
-    this.productsContainer.appendChild(stylesElement);
-  };
-
   public injectProduct = (products: TFormattedProduct[]) => {
     let productsContainer = this.productsContainer;
-    const tagStyles = TAGS_STYLES[this.currentTemplate];
-
-    this.injectTagStyles(tagStyles.styles);
 
     if (this.isSlider) {
       // override productsContainer to be the actual container of slider items
@@ -123,12 +133,7 @@ class ProductManager extends TemplateManager {
       ) as HTMLDivElement;
     }
 
-    const { productsCount } =
-      window.sponsoredProductConfig[mapConfigPages(this.page)];
-
-    for (const [index, product] of products.entries()) {
-      if (index >= productsCount) break;
-
+    for (const product of products) {
       const productElement = document.createElement('div');
       let productTemplateHTML = this.templateHTML;
 
@@ -152,13 +157,14 @@ class ProductManager extends TemplateManager {
         preparedElement,
         mappedProductValues,
       );
+
       const taggedProductElement = this.addTagToProductElement(
         cleanedProductElement,
-        tagStyles.selector,
         product.dsaUrl,
       );
 
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
+      taggedProductElement.id = product.div;
       productsContainer.prepend(taggedProductElement);
     }
 

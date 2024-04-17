@@ -9,6 +9,32 @@ import mapConfigPages from 'utils/helpers/mapConfigPages';
 import waitForDlApi from 'utils/helpers/waitForDlApi';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 
+window.sponsoredProductConfig = window.sponsoredProductConfig || {
+  tagLabel: 'PROMOWANE',
+  isLoaderVisible: true,
+
+  productsListing: {
+    zone: 'PRODUCT_LISTING',
+    isEnabled: true,
+    productsCount: 1,
+  },
+  pageDetails: {
+    isEnabled: true,
+    zone: 'PRODUCT_DETAILS_ASSOCIATED_ONE',
+    productsCount: 3,
+  },
+  mainPage: {
+    isEnabled: true,
+    zone: 'MAIN_PAGE_HOTSPOT_FOUR',
+    productsCount: 1,
+  },
+  basketPage: {
+    isEnabled: true,
+    zone: 'BASKET_PAGE_HOTSPOT',
+    productsCount: 1,
+  },
+};
+
 if (window.sponsoredProductConfig.isLoaderVisible) {
   showLoadingSpinner();
 }
@@ -27,7 +53,9 @@ const runApp = async () => {
     await waitForDlApi();
 
     const AdManager = initAdManager(page);
-    const products = await AdManager.getPromotedProducts();
+    const products = await AdManager.getPromotedProducts(
+      configPage.productsCount,
+    );
 
     const ProductManager = initProductManager(page);
 
