@@ -133,8 +133,6 @@ class ProductManager extends TemplateManager {
       ) as HTMLDivElement;
     }
 
-    console.log(products);
-
     for (const product of products) {
       const productElement = document.createElement('div');
       let productTemplateHTML = this.templateHTML;
