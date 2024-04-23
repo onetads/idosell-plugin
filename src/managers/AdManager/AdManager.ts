@@ -47,9 +47,9 @@ class AdManager {
                 opts: {
                   offer_ids: this.productsIds.join(','),
                   pos: index,
-                  asyncRender: true,
-                  div: SPONSORED_PRODUCT_TAG + index,
                 },
+                div: SPONSORED_PRODUCT_TAG + index,
+                asyncRender: true,
                 tplCode: TPL_CODE,
               });
 

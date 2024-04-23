@@ -1,5 +1,7 @@
+import { EMPTY_PRODUCTS_ARRAY } from 'consts/messages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
+import getMessage from 'utils/formatters/getMessage';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
 import {
   hideLoadingSpinner,
@@ -21,7 +23,7 @@ window.sponsoredProductConfig = window.sponsoredProductConfig || {
   pageDetails: {
     isEnabled: true,
     zone: 'PRODUCT_DETAILS_ASSOCIATED_ONE',
-    productsCount: 3,
+    productsCount: 1,
   },
   mainPage: {
     isEnabled: true,
@@ -57,6 +59,10 @@ const runApp = async () => {
       configPage.productsCount,
     );
 
+    if (products.length === 0) {
+      throw new Error(getMessage(EMPTY_PRODUCTS_ARRAY));
+    }
+
     const ProductManager = initProductManager(page);
 
     ProductManager.injectProduct(products);
@@ -73,7 +79,7 @@ const runApp = async () => {
 if (document.readyState !== 'loading') {
   runApp();
 } else {
-  window.addEventListener('DOMContentLoaded', async () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     runApp();
   });
 }

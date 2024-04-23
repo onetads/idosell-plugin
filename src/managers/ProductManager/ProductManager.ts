@@ -95,7 +95,7 @@ class ProductManager extends TemplateManager {
       sponsoredLabelLink.style.fontSize = 'inherit';
       sponsoredLabelLink.style.textDecoration = 'none';
       sponsoredLabelLink.style.pointerEvents = 'auto';
-      sponsoredLabelLink.href = 'asd';
+      sponsoredLabelLink.href = dsaUrl;
       sponsoredLabelLink.target = '_blank';
       sponsoredLabelLink.innerHTML = DSA_ICON;
 
@@ -132,6 +132,8 @@ class ProductManager extends TemplateManager {
         '.slick-track',
       ) as HTMLDivElement;
     }
+
+    console.log(products);
 
     for (const product of products) {
       const productElement = document.createElement('div');
