@@ -166,6 +166,7 @@ class ProductManager extends TemplateManager {
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       taggedProductElement.id = product.div;
       productsContainer.prepend(taggedProductElement);
+      product.renderAd();
     }
 
     if (this.isSlider) {

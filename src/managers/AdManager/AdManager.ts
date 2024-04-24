@@ -24,71 +24,80 @@ class AdManager {
     }
   }
 
-  public getPromotedProducts = async (productsCount: number) => {
+  public getPromotedProducts = async (
+    productsCount: number,
+  ): Promise<TFormattedProduct[]> => {
     if (!dlApi.fetchNativeAd)
       throw new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
 
-    const timeoutPromise = new Promise<void>((_, reject) => {
+    const timeoutPromise = new Promise<TFormattedProduct[]>((_, reject) => {
       setTimeout(() => {
-        reject(getMessage(REQUEST_TIMED_OUT));
+        reject(new Error(getMessage(REQUEST_TIMED_OUT)));
       }, MAX_TIMEOUT_MS);
     });
 
     const fetchNativeAd = new Promise<TFormattedProduct[]>(
       (resolve, reject) => {
         const products: TFormattedProduct[] = [];
+        const fetchPromises: Promise<void>[] = [];
 
         dlApi.cmd = dlApi.cmd || [];
-        dlApi.cmd.push(async (dlApiObj) => {
-          try {
-            for (let index = 1; index <= productsCount; index++) {
-              const ads = await dlApiObj.fetchNativeAd!({
-                slot: SLOT_NAME,
-                opts: {
-                  offer_ids: this.productsIds.join(','),
-                  pos: index,
-                },
-                div: SPONSORED_PRODUCT_TAG + index,
-                asyncRender: true,
-                tplCode: TPL_CODE,
+        dlApi.cmd.push((dlApiObj) => {
+          for (let index = 1; index <= productsCount; index++) {
+            const div = SPONSORED_PRODUCT_TAG + index;
+
+            const fetchPromise = dlApiObj.fetchNativeAd!({
+              slot: SLOT_NAME,
+              opts: {
+                offer_ids: this.productsIds.join(','),
+                pos: index,
+              },
+              div: div,
+              asyncRender: true,
+              tplCode: TPL_CODE,
+            })
+              .then((ads) => {
+                if (
+                  ads &&
+                  ads.fields.feed.offers &&
+                  ads.fields.feed.offers.length
+                ) {
+                  const { offers = [] } = ads.fields.feed;
+                  if (offers.length === 0) return;
+
+                  const offerData = offers[0];
+                  return this.prepareProductsData(
+                    offerData,
+                    ads.meta.adclick,
+                    ads.meta.dsaurl,
+                  ).then((productData) => {
+                    if (productData) {
+                      products.push({
+                        ...productData,
+                        div: div,
+                        renderAd: ads.render,
+                      });
+                    }
+                  });
+                }
+              })
+              .catch(() => {
+                reject(new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG)));
               });
 
-              const trackingAdLink = ads.meta.adclick;
-              const dsaUrl = ads.meta.dsaurl;
-              const { offers = [] } = ads.fields.feed;
-
-              const offerData = offers[0];
-
-              const productData = await this.prepareProductsData(
-                offerData,
-                trackingAdLink,
-                dsaUrl,
-              );
-
-              if (productData) {
-                ads.render();
-                products.push({
-                  ...productData,
-                  div: SPONSORED_PRODUCT_TAG + index,
-                });
-              }
-            }
-
-            resolve(products);
-          } catch {
-            reject(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
+            fetchPromises.push(fetchPromise);
           }
+
+          Promise.all(fetchPromises)
+            .then(() => resolve(products))
+            .catch(() =>
+              reject(new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG))),
+            );
         });
       },
     );
 
-    return (await Promise.race([fetchNativeAd, timeoutPromise])
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        throw new Error(error);
-      })) as TFormattedProduct[];
+    return Promise.race([fetchNativeAd, timeoutPromise]);
   };
 
   private prepareProductsData = async (
