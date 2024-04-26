@@ -10,6 +10,8 @@ const COULDNT_FETCH_PRODUCTS_DATA = 'COULDNT_FETCH_PRODUCTS_DATA';
 const FETCHING_DLAPI_TOOK_TOO_LONG = 'FETCHING_DLAPI_TOOK_TOO_LONG';
 const TEMPLATE_NOT_VALID = 'TEMPLATE_NOT_VALID';
 const EMPTY_PRODUCTS_ID_LIST = 'EMPTY_PRODUCTS_ID_LIST';
+const EMPTY_PRODUCTS_ARRAY = 'EMPTY_PRODUCTS_ARRAY';
+const EMPTY_ADS_ARRAY = 'EMPTY_ADS_ARRAY';
 
 const messagesMap = {
   [EMPTY_LIST_WARN]: "List is empty or product selector doesn't match",
@@ -28,6 +30,8 @@ const messagesMap = {
   [TEMPLATE_NOT_VALID]: 'Template is not valid',
   [EMPTY_PRODUCTS_ID_LIST]:
     "List of products ids is empty - probably script couldn't find any products by ids selector",
+  [EMPTY_PRODUCTS_ARRAY]: 'Products array is empty',
+  [EMPTY_ADS_ARRAY]: 'fetchNativeAd: Ads array is empty',
 };
 
 export {
@@ -44,4 +48,6 @@ export {
   FETCHING_DLAPI_TOOK_TOO_LONG,
   TEMPLATE_NOT_VALID,
   EMPTY_PRODUCTS_ID_LIST,
+  EMPTY_PRODUCTS_ARRAY,
+  EMPTY_ADS_ARRAY,
 };

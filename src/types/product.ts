@@ -107,6 +107,7 @@ type TFormattedProduct = {
   priceRegular: string;
   dsaUrl: string | undefined;
   div: string;
+  renderAd: () => void;
 };
 
 type TCheckProductValueMap = {
