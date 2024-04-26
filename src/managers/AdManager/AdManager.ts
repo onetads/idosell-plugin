@@ -1,6 +1,7 @@
 import { MAX_TIMEOUT_MS, SLOT_NAME, TPL_CODE } from 'consts/dlApi';
 import {
   COULDNT_FETCH_PRODUCTS_DATA,
+  EMPTY_ADS_ARRAY,
   ERROR_PROMOTED_PRODUCTS_MSG,
   REQUEST_TIMED_OUT,
 } from 'consts/messages';
@@ -30,7 +31,7 @@ class AdManager {
     if (!dlApi.fetchNativeAd)
       throw new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
 
-    const timeoutPromise = new Promise<TFormattedProduct[]>((_, reject) => {
+    const timeoutPromise = new Promise<void>((_, reject) => {
       setTimeout(() => {
         reject(new Error(getMessage(REQUEST_TIMED_OUT)));
       }, MAX_TIMEOUT_MS);
@@ -79,6 +80,8 @@ class AdManager {
                       });
                     }
                   });
+                } else {
+                  console.warn(getMessage(EMPTY_ADS_ARRAY));
                 }
               })
               .catch(() => {
@@ -97,7 +100,11 @@ class AdManager {
       },
     );
 
-    return Promise.race([fetchNativeAd, timeoutPromise]);
+    return (await Promise.race([fetchNativeAd, timeoutPromise])
+      .then((res) => res)
+      .catch((err) => {
+        throw new Error(err);
+      })) as TFormattedProduct[];
   };
 
   private prepareProductsData = async (
