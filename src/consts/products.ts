@@ -21,6 +21,7 @@ import {
 } from 'types/product';
 
 const SPONSORED_PRODUCT_TAG = 'sponsored-';
+const SPONSORED_PRODUCT_CLASS = 'onet-product';
 
 const BASKET_PAGE_HOTSPOT_SELECTOR = '#basketedit_hotspot_zone1 .products';
 
@@ -40,7 +41,7 @@ const MAIN_PAGE_HOT_SPOT_FOUR_LIST_SELECTOR = '#main_hotspot_zone4 .products';
 
 const PRODUCT_DISABLE_KEY = 'product_disable';
 const PRODUCT_CLASS = 'product';
-const PRODUCT_SELECTOR = `.${PRODUCT_CLASS}`;
+const PRODUCT_SELECTOR = `.${PRODUCT_CLASS}:not(.${SPONSORED_PRODUCT_CLASS})`;
 
 const PRODUCT_LISTING_ID = 'data-product_id';
 const PRODUCT_LISTING_ID_SELECTOR = `[${PRODUCT_LISTING_ID}]`;
@@ -150,4 +151,5 @@ export {
   SLIDER_CLASS_TWO,
   SLIDER_CLONED_CLASS,
   SPONSORED_PRODUCT_TAG,
+  SPONSORED_PRODUCT_CLASS,
 };

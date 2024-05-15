@@ -1,4 +1,4 @@
-import { SLIDER_CLONED_CLASS } from 'consts/products';
+import { SLIDER_CLONED_CLASS, SPONSORED_PRODUCT_CLASS } from 'consts/products';
 import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
@@ -165,6 +165,7 @@ class ProductManager extends TemplateManager {
 
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       taggedProductElement.id = product.div;
+      taggedProductElement.classList.add(SPONSORED_PRODUCT_CLASS);
       productsContainer.prepend(taggedProductElement);
       product.renderAd();
     }

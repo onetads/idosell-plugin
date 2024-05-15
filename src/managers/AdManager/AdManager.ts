@@ -40,7 +40,7 @@ class AdManager {
     const fetchNativeAd = new Promise<TFormattedProduct[]>(
       (resolve, reject) => {
         const products: TFormattedProduct[] = [];
-        const fetchPromises: Promise<void>[] = [];
+        const fetchPromises: Promise<void | TFormattedProduct>[] = [];
 
         dlApi.cmd = dlApi.cmd || [];
         dlApi.cmd.push((dlApiObj) => {
@@ -57,29 +57,39 @@ class AdManager {
               asyncRender: true,
               tplCode: TPL_CODE,
             })
-              .then((ads) => {
+              .then(async (ads) => {
                 if (
                   ads &&
                   ads.fields.feed.offers &&
                   ads.fields.feed.offers.length
                 ) {
-                  const { offers = [] } = ads.fields.feed;
-                  if (offers.length === 0) return;
+                  let isAdAvailable = false;
+                  let adIndex = 0;
 
-                  const offerData = offers[0];
-                  return this.prepareProductsData(
-                    offerData,
-                    ads.meta.adclick,
-                    ads.meta.dsaurl,
-                  ).then((productData) => {
-                    if (productData) {
+                  do {
+                    const { offers = [] } = ads.fields.feed;
+                    if (offers.length === 0) return;
+
+                    const offerData = offers[adIndex];
+                    const adData = await this.prepareProductsData(
+                      offerData,
+                      ads.meta.adclick,
+                      ads.meta.dsaurl,
+                    );
+
+                    if (adData) {
+                      isAdAvailable = true;
                       products.push({
-                        ...productData,
+                        ...adData,
                         div: div,
                         renderAd: ads.render,
                       });
+
+                      return adData as TFormattedProduct;
                     }
-                  });
+
+                    adIndex++;
+                  } while (!isAdAvailable);
                 } else {
                   console.warn(getMessage(EMPTY_ADS_ARRAY));
                 }
