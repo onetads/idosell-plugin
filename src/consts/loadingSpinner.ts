@@ -4,7 +4,7 @@ const LOADING_SPINNER_CLASS = 'onet-loading-spinner';
 const LOADING_SPINNER_CONTAINER_STYLES = `
     top: 0;
     display: flex;
-    align-items: center;
+    padding: 24px 0;
     justify-content: center;
     z-index: 999;
     position: absolute;
