@@ -94,7 +94,9 @@ class AdManager {
                   console.warn(getMessage(EMPTY_ADS_ARRAY));
                 }
               })
-              .catch(() => {
+              .catch((e) => {
+                console.log(e);
+
                 reject(new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG)));
               });
 
@@ -167,16 +169,16 @@ class AdManager {
     // the price sign for the omnibus price
     // because idosell API does not provide it
     const getOmnibusPriceSign = () => {
-      const omnibusPriceVal = price.omnibusPrice?.gross.value;
-      const priceVal = price.price.gross.value;
+      const omnibusPriceVal = price.omnibusPrice?.gross?.value;
+      const priceVal = price.price.gross?.value;
 
-      if (!omnibusPriceVal) return '';
+      if (!omnibusPriceVal || !priceVal) return '';
 
       return priceVal > omnibusPriceVal ? '+' : '-';
     };
 
     const omnibusPriceIsHigherThanSellingPrice =
-      price.omnibusPriceDetails.omnibusPriceIsHigherThanSellingPrice;
+      price.omnibusPriceDetails?.omnibusPriceIsHigherThanSellingPrice;
 
     const priceSign = omnibusPriceIsHigherThanSellingPrice ? '+' : '-';
     const omnibusPriceSign = getOmnibusPriceSign();
@@ -186,9 +188,9 @@ class AdManager {
       id: id.toString(),
       imageUrl: offer_image,
       link: trackingAdLink + offer_url,
-      pricePercent: `${priceSign}${price.youSavePercent.toString()}%`,
+      pricePercent: `${priceSign}${price.youSavePercent?.toString()}%`,
       priceOmnibus: price.omnibusPrice?.gross?.formatted || '',
-      priceOmnibusPercent: `${omnibusPriceSign}${price.omnibusPriceDetails.youSavePercent.toString()}%`,
+      priceOmnibusPercent: `${omnibusPriceSign}${price.omnibusPriceDetails?.youSavePercent?.toString()}%`,
       priceMain: price.price.gross.formatted,
       producerName: producer.name,
       producerUrl: producer.link,

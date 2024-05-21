@@ -68,18 +68,18 @@ type TProductResponse = {
           youSavePercent: number;
           omnibusPriceDetails: {
             youSavePercent: number;
-            omnibusPriceIsHigherThanSellingPrice: boolean;
+            omnibusPriceIsHigherThanSellingPrice?: boolean;
           };
           price: {
             gross: {
               formatted: string;
-              value: number;
+              value?: number;
             };
           };
           omnibusPrice: {
             gross: {
               formatted: string;
-              value: number;
+              value?: number;
             };
           } | null;
           crossedPrice: {

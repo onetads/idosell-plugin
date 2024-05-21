@@ -37,4 +37,14 @@ const getProductMap = (product: TFormattedProduct) => {
   };
 };
 
-export { initProductManager, getProductMap };
+const overrideProductStyles = (product: Element) => {
+  const productPrice = product.querySelector(
+    '.product .price:not(.--points,.--max,.--omnibus)',
+  ) as HTMLElement;
+
+  if (productPrice) {
+    productPrice.style.color = 'inherit';
+  }
+};
+
+export { initProductManager, getProductMap, overrideProductStyles };
