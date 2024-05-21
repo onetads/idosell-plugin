@@ -94,9 +94,7 @@ class AdManager {
                   console.warn(getMessage(EMPTY_ADS_ARRAY));
                 }
               })
-              .catch((e) => {
-                console.log(e);
-
+              .catch(() => {
                 reject(new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG)));
               });
 
