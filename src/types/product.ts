@@ -18,7 +18,9 @@ enum EProductElements {
   PRODUCER = 'PRODUCER',
   PRODUCER_URL = 'PRODUCER_URL',
   PRICE_MAIN = 'PRICE_MAIN',
+  PRICE_PERCENT = 'PRICE_PERCENT',
   PRICE_OMNIBUS = 'PRICE_OMNIBUS',
+  PRICE_OMNIBUS_PERCENT = 'PRICE_OMNIBUS_PERCENT',
   IMG = 'IMG',
   PRODUCT_LINK = 'PRODUCT_LINK',
   DESCRIPTION = 'DESCRIPTION',
@@ -63,14 +65,21 @@ type TProductResponse = {
         name: string;
         pointsReceive: string;
         price: {
+          youSavePercent: number;
+          omnibusPriceDetails: {
+            youSavePercent: number;
+            omnibusPriceIsHigherThanSellingPrice?: boolean;
+          };
           price: {
             gross: {
               formatted: string;
+              value?: number;
             };
           };
           omnibusPrice: {
             gross: {
               formatted: string;
+              value?: number;
             };
           } | null;
           crossedPrice: {
@@ -99,7 +108,9 @@ type TFormattedProduct = {
   producerName: string;
   producerUrl: string;
   priceMain: string;
+  pricePercent: string;
   priceOmnibus: string;
+  priceOmnibusPercent: string;
   imageUrl: string;
   link: string;
   description: string;

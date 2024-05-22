@@ -4,7 +4,10 @@ import {
   PRODUCT_PRICE_REGULAR_KEY,
 } from 'consts/replaceMap/keys';
 import { DSA_ICON, LABEL_CLASS, LABEL_CONTAINER_CLASS } from 'consts/tags';
-import { getProductMap } from 'managers/ProductManager/ProductManager.utils';
+import {
+  getProductMap,
+  overrideProductStyles,
+} from 'managers/ProductManager/ProductManager.utils';
 import TemplateManager from 'managers/TemplateManager/TemplateManager';
 import { getMappedTemplate } from 'managers/TemplateManager/TemplateManager.utils';
 import { TPages } from 'types/pages';
@@ -162,6 +165,8 @@ class ProductManager extends TemplateManager {
         cleanedProductElement,
         product.dsaUrl,
       );
+
+      overrideProductStyles(taggedProductElement);
 
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       taggedProductElement.id = product.div;

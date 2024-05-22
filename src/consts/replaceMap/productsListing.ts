@@ -7,6 +7,8 @@ import {
   PRODUCT_POINTS_KEY,
   PRODUCT_PRICE_MAIN_KEY,
   PRODUCT_PRICE_OMNIBUS_KEY,
+  PRODUCT_PRICE_OMNIBUS_PERCENT_KEY,
+  PRODUCT_PRICE_PERCENT_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
@@ -97,12 +99,23 @@ export default {
     key: PRODUCT_PRICE_MAIN_KEY,
     map: [
       {
-        selector: '.product .price:not(.--points,.--max)',
+        selector: '.product .price:not(.--points,.--max,.--omnibus)',
         replace: [CONTENT],
         prepareValue: (element) => {
           element.childNodes[0].textContent = PRODUCT_PRICE_MAIN_KEY;
           return element.innerHTML;
         },
+      },
+    ],
+  },
+
+  [EProductElements.PRICE_PERCENT]: {
+    key: PRODUCT_PRICE_PERCENT_KEY,
+    map: [
+      {
+        canBeNull: true,
+        selector: '.product .price:has(.omnibus_label) .price_percent',
+        replace: [CONTENT],
       },
     ],
   },
@@ -114,6 +127,17 @@ export default {
         selector: '.product .omnibus_price__value',
         replace: [CONTENT],
         canBeNull: true,
+      },
+    ],
+  },
+
+  [EProductElements.PRICE_OMNIBUS_PERCENT]: {
+    key: PRODUCT_PRICE_OMNIBUS_PERCENT_KEY,
+    map: [
+      {
+        canBeNull: true,
+        selector: '.product .price:has(.omnibus_price__text) .price_percent',
+        replace: [CONTENT],
       },
     ],
   },

@@ -9,20 +9,26 @@ const prepareProductsQuery = (ids: string) => {
                 description
                 pointsReceive
                 price {
+                    youSavePercent
                     omnibusPrice {
                         gross {
                             formatted
+                            value
                         }
                     }
                     price {
                         gross {
                             formatted
+                            value
                         }
                     }
                     crossedPrice {
                         gross {
                             formatted
                         }
+                    }
+                    omnibusPriceDetails {
+                        youSavePercent
                     }
                 }
                 producer {
