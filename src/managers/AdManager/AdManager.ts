@@ -163,7 +163,7 @@ class AdManager {
 
     const { offer_image, offer_url } = product;
 
-    // There is need here to calculate
+    // It is necessary to calculate
     // the price sign for the omnibus price
     // because idosell API does not provide it
     const getOmnibusPriceSign = () => {
