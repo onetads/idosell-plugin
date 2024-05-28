@@ -87,6 +87,10 @@ class ProductManager extends TemplateManager {
     labelElementContainer.style.alignSelf = 'flex-start';
 
     const labelElement = document.createElement('span');
+    labelElement.style.display = 'flex';
+    labelElement.style.alignItems = 'center';
+    labelElement.style.paddingLeft = '10px';
+    labelElement.style.paddingRight = '10px';
     labelElement.textContent = window.sponsoredProductConfig.tagLabel;
     labelElement.className = LABEL_CLASS;
     labelElementContainer.appendChild(labelElement);
@@ -96,6 +100,7 @@ class ProductManager extends TemplateManager {
       sponsoredLabelLink.style.marginLeft = '4px';
       sponsoredLabelLink.style.color = 'inherit';
       sponsoredLabelLink.style.fontSize = 'inherit';
+      sponsoredLabelLink.style.lineHeight = '1';
       sponsoredLabelLink.style.textDecoration = 'none';
       sponsoredLabelLink.style.pointerEvents = 'auto';
       sponsoredLabelLink.href = dsaUrl;
@@ -114,13 +119,21 @@ class ProductManager extends TemplateManager {
 
       productNameContainer.prepend(labelElementContainer);
     } else {
-      const productIconContainer = productElement.querySelector(
-        '.product__icon',
+      const labelContainer = productElement.querySelector(
+        '.label_container',
       ) as HTMLDivElement;
 
-      productIconContainer.style.flexDirection = 'column';
+      if (labelContainer) {
+        labelContainer.append(labelElementContainer);
+      } else {
+        const productIconContainer = productElement.querySelector(
+          '.product__icon',
+        ) as HTMLDivElement;
 
-      productIconContainer.append(labelElementContainer);
+        productIconContainer.style.flexDirection = 'column';
+
+        productIconContainer.append(labelElementContainer);
+      }
     }
 
     return productElement;
