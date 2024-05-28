@@ -87,7 +87,7 @@ class ProductManager extends TemplateManager {
     labelElementContainer.style.alignSelf = 'flex-start';
 
     const labelElement = document.createElement('span');
-    labelElement.style.display = 'flex';
+    labelElement.style.display = 'inline-flex';
     labelElement.style.alignItems = 'center';
     labelElement.style.paddingLeft = '10px';
     labelElement.style.paddingRight = '10px';
