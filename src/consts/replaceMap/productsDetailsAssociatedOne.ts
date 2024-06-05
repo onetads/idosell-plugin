@@ -29,6 +29,17 @@ export default {
         selector: '.product .product__icon',
         replace: ['data-product-id'],
       },
+      {
+        selector: '.product .product-add-to-bsk',
+        canBeNull: true,
+        replace: ['href'],
+        prepareValue: (element: HTMLAnchorElement) => {
+          return (element.href = element.href.replace(
+            /product=\d+(?=&)/,
+            `product=${PRODUCT_ID_KEY}`,
+          ));
+        },
+      },
     ],
   },
 

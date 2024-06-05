@@ -1,5 +1,6 @@
 import {
   PRODUCT_DESCRIPTION_KEY,
+  PRODUCT_DESCRIPTION_TRAIT_KEY,
   PRODUCT_ID_KEY,
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
@@ -32,6 +33,10 @@ const getProductMap = (product: TFormattedProduct) => {
     [PRODUCT_IMAGE_URL_KEY]: product.imageUrl,
     [PRODUCT_LINK_KEY]: product.link,
     [PRODUCT_DESCRIPTION_KEY]: product.description,
+    [PRODUCT_DESCRIPTION_TRAIT_KEY]: product.description.replaceAll(
+      '<[^>]*>',
+      '',
+    ),
     [PRODUCT_POINTS_KEY]: product.points,
     [PRODUCT_PRICE_REGULAR_KEY]: product.priceRegular,
   };
