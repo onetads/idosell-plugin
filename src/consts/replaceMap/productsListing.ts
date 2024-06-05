@@ -1,6 +1,7 @@
 import {
   CONTENT,
   PRODUCT_DESCRIPTION_KEY,
+  PRODUCT_DESCRIPTION_TRAIT_KEY,
   PRODUCT_ID_KEY,
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
@@ -48,6 +49,17 @@ export default {
         replace: [CONTENT],
         prepareValue: () => {
           return '+ Dodaj do porównania';
+        },
+      },
+      {
+        selector: '.product .product-add-to-bsk',
+        canBeNull: true,
+        replace: ['href'],
+        prepareValue: (element: HTMLAnchorElement) => {
+          return (element.href = element.href.replace(
+            /product=\d+(?=&)/,
+            `product=${PRODUCT_ID_KEY}`,
+          ));
         },
       },
     ],
@@ -178,6 +190,17 @@ export default {
     map: [
       {
         selector: '.product .product_cleardescription',
+        replace: [CONTENT],
+        canBeNull: true,
+      },
+    ],
+  },
+
+  [EProductElements.DESCRIPTION_TRAIT]: {
+    key: PRODUCT_DESCRIPTION_TRAIT_KEY,
+    map: [
+      {
+        selector: '.product .description_trait',
         replace: [CONTENT],
         canBeNull: true,
       },
