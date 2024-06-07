@@ -132,6 +132,7 @@ const CONTAINER_SELECTORS_TO_DELETE = [
   '.product__opins',
   '.product__ajax_delivery',
   '.search_short_desc',
+  'small:is(.price:is(.--convert))',
 ];
 
 const SLIDER_CLASS_ONE = '--slider';

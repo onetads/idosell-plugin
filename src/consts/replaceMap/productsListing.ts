@@ -62,6 +62,11 @@ export default {
           ));
         },
       },
+      {
+        selector: '.product form input[name="product"]',
+        canBeNull: true,
+        replace: ['value'],
+      },
     ],
   },
 
@@ -163,9 +168,19 @@ export default {
         replace: ['src'],
       },
       {
+        selector: '.product .product__icon img',
+        canBeNull: true,
+        replace: ['data-src'],
+      },
+      {
         selector: '.product .product__icon source',
         canBeNull: true,
         replace: ['srcset'],
+      },
+      {
+        selector: '.product .product__icon source',
+        canBeNull: true,
+        replace: ['data-srcset'],
       },
     ],
   },

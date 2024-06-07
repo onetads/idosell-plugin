@@ -186,12 +186,23 @@ class ProductManager extends TemplateManager {
       taggedProductElement.classList.add(SPONSORED_PRODUCT_CLASS);
       productsContainer.prepend(taggedProductElement);
       product.renderAd();
+
+      if (
+        window.sponsoredProductHelper &&
+        typeof window.sponsoredProductHelper === 'function'
+      ) {
+        window.sponsoredProductHelper(product.id, product.description);
+      }
     }
 
     if (this.isSlider) {
       $(`${getSliderContainerSelector(this.page)} .products`).each(function () {
         $(this).slick('reinit');
       });
+    }
+
+    if (app_shop?.runApp) {
+      app_shop.runApp();
     }
   };
 }
