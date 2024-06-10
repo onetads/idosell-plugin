@@ -50,6 +50,14 @@ const overrideProductStyles = (product: Element) => {
   if (productPrice) {
     productPrice.style.color = 'inherit';
   }
+
+  const traits = product.querySelectorAll<HTMLElement>('.param_trait li');
+
+  if (traits && traits.length > 0) {
+    traits.forEach((trait) => {
+      trait.style.listStyleType = 'none';
+    });
+  }
 };
 
 export { initProductManager, getProductMap, overrideProductStyles };
