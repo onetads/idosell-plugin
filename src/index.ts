@@ -2,6 +2,7 @@ import { EMPTY_PRODUCTS_ARRAY } from 'consts/messages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getMessage from 'utils/formatters/getMessage';
+import deleteExisitingSponsoredProducts from 'utils/helpers/deleteExistingSponsoredProducts';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
 import {
   hideLoadingSpinner,
@@ -70,6 +71,7 @@ const runApp = async () => {
     hideLoadingSpinner();
   } catch (e) {
     if (e instanceof Error) {
+      deleteExisitingSponsoredProducts();
       hideLoadingSpinner();
       console.error(e.message);
     }
