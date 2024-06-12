@@ -115,9 +115,9 @@ class ProductManager extends TemplateManager {
       sponsoredLabelLink.style.pointerEvents = 'auto';
 
       sponsoredLabelLink.addEventListener('click', (e) => {
-        window.open(dsaUrl, '_blank');
-
         e.preventDefault();
+
+        window.open(dsaUrl, '_blank');
       });
 
       sponsoredLabelLink.innerHTML = DSA_ICON;
