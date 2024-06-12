@@ -1,4 +1,10 @@
-import { SLIDER_CLONED_CLASS, SPONSORED_PRODUCT_CLASS } from 'consts/products';
+import { APP_SHOP_RUN_APP } from 'consts/messages';
+import {
+  ADD_TO_BASKET_BTN_CLASS,
+  PRODUCT_CLASS,
+  SLIDER_CLONED_CLASS,
+  SPONSORED_PRODUCT_CLASS,
+} from 'consts/products';
 import {
   PRODUCT_PRICE_OMNIBUS_KEY,
   PRODUCT_PRICE_REGULAR_KEY,
@@ -12,10 +18,14 @@ import TemplateManager from 'managers/TemplateManager/TemplateManager';
 import { getMappedTemplate } from 'managers/TemplateManager/TemplateManager.utils';
 import { TPages } from 'types/pages';
 import { TCheckProductValueMap, TFormattedProduct } from 'types/product';
+import { TSlickSliderOptions } from 'types/slider';
 import { ETemplates } from 'types/templates';
+import getMessage from 'utils/formatters/getMessage';
+import deleteExisitingSponsoredProducts from 'utils/helpers/deleteExistingSponsoredProducts';
 import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor';
 import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
 import getSliderContainerSelector from 'utils/helpers/getSliderContainerSelector';
+import { hideLoadingSpinner } from 'utils/helpers/loadingSpinner';
 
 class ProductManager extends TemplateManager {
   constructor(page: TPages) {
@@ -96,15 +106,20 @@ class ProductManager extends TemplateManager {
     labelElementContainer.appendChild(labelElement);
 
     if (dsaUrl) {
-      const sponsoredLabelLink = document.createElement('a');
+      const sponsoredLabelLink = document.createElement('span');
       sponsoredLabelLink.style.marginLeft = '4px';
       sponsoredLabelLink.style.color = 'inherit';
       sponsoredLabelLink.style.fontSize = 'inherit';
       sponsoredLabelLink.style.lineHeight = '1';
       sponsoredLabelLink.style.textDecoration = 'none';
       sponsoredLabelLink.style.pointerEvents = 'auto';
-      sponsoredLabelLink.href = dsaUrl;
-      sponsoredLabelLink.target = '_blank';
+
+      sponsoredLabelLink.addEventListener('click', (e) => {
+        window.open(dsaUrl, '_blank');
+
+        e.preventDefault();
+      });
+
       sponsoredLabelLink.innerHTML = DSA_ICON;
 
       labelElement.appendChild(sponsoredLabelLink);
@@ -149,6 +164,7 @@ class ProductManager extends TemplateManager {
       ) as HTMLDivElement;
     }
 
+    deleteExisitingSponsoredProducts();
     for (const product of products) {
       const productElement = document.createElement('div');
       let productTemplateHTML = this.templateHTML;
@@ -184,7 +200,19 @@ class ProductManager extends TemplateManager {
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       taggedProductElement.id = product.div;
       taggedProductElement.classList.add(SPONSORED_PRODUCT_CLASS);
-      productsContainer.prepend(taggedProductElement);
+
+      if (this.isSlider) {
+        $(`${getSliderContainerSelector(this.page)}`).slick('unslick');
+
+        productsContainer = document.querySelector(
+          getSliderContainerSelector(this.page) || '',
+        ) as HTMLDivElement;
+
+        productsContainer.prepend(taggedProductElement);
+      } else {
+        productsContainer.prepend(taggedProductElement);
+      }
+
       product.renderAd();
 
       if (
@@ -196,13 +224,57 @@ class ProductManager extends TemplateManager {
     }
 
     if (this.isSlider) {
-      $(`${getSliderContainerSelector(this.page)} .products`).each(function () {
-        $(this).slick('reinit');
-      });
+      // we have to hide loader here to prevent
+      // weird behavior of slider
+      hideLoadingSpinner();
+
+      const slickSliderElement = $(
+        `${getSliderContainerSelector(this.page)}`,
+      ).get(0) as unknown as TSlickSliderOptions;
+
+      $(getSliderContainerSelector(this.page) || '').slick(
+        slickSliderElement.slick.options,
+      );
     }
 
-    if (app_shop?.runApp) {
-      app_shop.runApp();
+    // We need to run this event after slider reinitialization
+    for (const product of products) {
+      if (
+        this.page === 'MAIN_PAGE' &&
+        app_shop &&
+        app_shop.fn &&
+        app_shop.fn.addToBasketAjax
+      ) {
+        // On main page we need to set add to basket event
+        // manually instead of using app_shop.runApp()
+        app_shop.fn.addToBasketAjax(
+          `.${PRODUCT_CLASS}[data-product_id="${product.id}"]`,
+          `.${ADD_TO_BASKET_BTN_CLASS}`,
+        );
+      }
+    }
+
+    try {
+      setTimeout(() => {
+        // if product template contains .product-add-to-bsk class
+        // we should not run app_shop.runApp() function
+        // because actions are made by <a> tag with href php actions
+        const shouldRunAppShopFn =
+          !this.templateHTML.includes('product-add-to-bsk');
+
+        // There were some issues when running this function on details page
+        if (
+          app_shop?.runApp &&
+          this.page !== 'PRODUCT_DETAILS_PAGE' &&
+          shouldRunAppShopFn
+        ) {
+          app_shop.runApp();
+        }
+      }, 0);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.warn(`${getMessage(APP_SHOP_RUN_APP)} - ${e.message}`);
+      }
     }
   };
 }

@@ -12,6 +12,7 @@ const TEMPLATE_NOT_VALID = 'TEMPLATE_NOT_VALID';
 const EMPTY_PRODUCTS_ID_LIST = 'EMPTY_PRODUCTS_ID_LIST';
 const EMPTY_PRODUCTS_ARRAY = 'EMPTY_PRODUCTS_ARRAY';
 const EMPTY_ADS_ARRAY = 'EMPTY_ADS_ARRAY';
+const APP_SHOP_RUN_APP = 'APP_SHOP_RUN_APP';
 
 const messagesMap = {
   [EMPTY_LIST_WARN]: "List is empty or product selector doesn't match",
@@ -32,6 +33,7 @@ const messagesMap = {
     "List of products ids is empty - probably script couldn't find any products by ids selector",
   [EMPTY_PRODUCTS_ARRAY]: 'Products array is empty',
   [EMPTY_ADS_ARRAY]: 'fetchNativeAd: Ads array is empty',
+  [APP_SHOP_RUN_APP]: 'app_shop.runApp() function error',
 };
 
 export {
@@ -50,4 +52,5 @@ export {
   EMPTY_PRODUCTS_ID_LIST,
   EMPTY_PRODUCTS_ARRAY,
   EMPTY_ADS_ARRAY,
+  APP_SHOP_RUN_APP,
 };

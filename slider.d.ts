@@ -1,6 +1,6 @@
 declare global {
   interface JQuery {
-    slick: (arg: string) => void;
+    slick: (arg: string | object) => void;
   }
 }
 

@@ -47,8 +47,14 @@ export default {
         selector: '.product .product__compare_item',
         canBeNull: true,
         replace: [CONTENT],
-        prepareValue: () => {
-          return '+ Dodaj do porównania';
+        prepareValue: (element) => {
+          const isCompareAdd = element.className.includes('--add');
+
+          if (!isCompareAdd) {
+            return '+ Dodaj do porównania';
+          }
+
+          return element.innerHTML;
         },
       },
       {
