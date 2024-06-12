@@ -22,6 +22,7 @@ import {
 
 const SPONSORED_PRODUCT_TAG = 'sponsored-';
 const SPONSORED_PRODUCT_CLASS = 'onet-product';
+const ADD_TO_BASKET_BTN_CLASS = 'product__buy_button';
 
 const BASKET_PAGE_HOTSPOT_SELECTOR = '#basketedit_hotspot_zone1 .products';
 
@@ -30,7 +31,8 @@ const PRODUCT_LISTING_HOTSPOT_SELECTOR = '#search_hotspot_zone1 .products';
 
 const ASSOCIATED_ONE_PRODUCTS_LIST_SELECTOR =
   '#products_associated_zone1 .products';
-const ASSOCIATED_TWO_PRODUCTS_LIST_SELECTOR = '#products_associated_zone2';
+const ASSOCIATED_TWO_PRODUCTS_LIST_SELECTOR =
+  '#products_associated_zone2 .products';
 const ASSOCIATED_THREE_PRODUCTS_LIST_SELECTOR =
   '#products_associated_zone3 .products';
 
@@ -42,7 +44,7 @@ const MAIN_PAGE_HOT_SPOT_FOUR_LIST_SELECTOR = '#main_hotspot_zone4 .products';
 const PRODUCT_DISABLE_KEY = 'product_disable';
 const PRODUCT_CLASS = 'product';
 const PRODUCT_NOT_AVAILABLE_ID = 'product_tell_availability';
-const PRODUCT_SELECTOR = `.${PRODUCT_CLASS}:not(.${SPONSORED_PRODUCT_CLASS}):not(:has(#${PRODUCT_NOT_AVAILABLE_ID}))`;
+const PRODUCT_SELECTOR = `.${PRODUCT_CLASS}:not(.${SPONSORED_PRODUCT_CLASS}):not(:has(#${PRODUCT_NOT_AVAILABLE_ID})):has(.product__icon)`;
 
 const PRODUCT_LISTING_ID = 'data-product_id';
 const PRODUCT_LISTING_ID_SELECTOR = `[${PRODUCT_LISTING_ID}]`;
@@ -133,6 +135,8 @@ const CONTAINER_SELECTORS_TO_DELETE = [
   '.product__ajax_delivery',
   '.search_short_desc',
   'small:is(.price:is(.--convert))',
+  '.product__rating',
+  '.s_unit_converted_price',
 ];
 
 const SLIDER_CLASS_ONE = '--slider';
@@ -155,4 +159,5 @@ export {
   SLIDER_CLONED_CLASS,
   SPONSORED_PRODUCT_TAG,
   SPONSORED_PRODUCT_CLASS,
+  ADD_TO_BASKET_BTN_CLASS,
 };
