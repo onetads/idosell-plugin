@@ -113,6 +113,7 @@ class ProductManager extends TemplateManager {
       sponsoredLabelLink.style.lineHeight = '1';
       sponsoredLabelLink.style.textDecoration = 'none';
       sponsoredLabelLink.style.pointerEvents = 'auto';
+      sponsoredLabelLink.style.cursor = 'pointer';
 
       sponsoredLabelLink.addEventListener('click', (e) => {
         e.preventDefault();
