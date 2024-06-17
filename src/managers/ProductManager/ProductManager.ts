@@ -66,6 +66,7 @@ class ProductManager extends TemplateManager {
   };
 
   private deleteExistingProduct = (id: string) => {
+    deleteExisitingSponsoredProducts();
     const productIdSelector = getProductsIdSelectorIfExists(this.page);
     const productIdExtractorKey = getProductsIdExtractorIfExists(this.page);
 
@@ -184,7 +185,9 @@ class ProductManager extends TemplateManager {
       productElement.innerHTML = productTemplateHTML;
       const preparedElement = productElement.firstChild as HTMLDivElement;
 
-      this.deleteExistingProduct(product.id);
+      if (!this.isSlider) {
+        this.deleteExistingProduct(product.id);
+      }
 
       const cleanedProductElement = this.cleanUpProductElement(
         preparedElement,
@@ -209,6 +212,7 @@ class ProductManager extends TemplateManager {
           getSliderContainerSelector(this.page) || '',
         ) as HTMLDivElement;
 
+        this.deleteExistingProduct(product.id);
         productsContainer.prepend(taggedProductElement);
       } else {
         productsContainer.prepend(taggedProductElement);
