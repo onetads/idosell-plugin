@@ -2,6 +2,7 @@ import { EMPTY_PRODUCTS_ARRAY } from 'consts/messages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getMessage from 'utils/formatters/getMessage';
+import applyAdditionalStyles from 'utils/helpers/applyAdditionalStyles';
 import deleteExisitingSponsoredProducts from 'utils/helpers/deleteExistingSponsoredProducts';
 import getCurrentPageInfo from 'utils/helpers/getCurrentPageInfo';
 import {
@@ -15,6 +16,7 @@ import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 window.sponsoredProductConfig = window.sponsoredProductConfig || {
   tagLabel: 'PROMOWANE',
   isLoaderVisible: true,
+  isListViewEnabled: true,
 
   productsListing: {
     zone: 'PRODUCT_LISTING',
@@ -67,6 +69,15 @@ const runApp = async () => {
     const ProductManager = initProductManager(page);
 
     ProductManager.injectProduct(products);
+
+    const isListViewEnabled =
+      window.sponsoredProductConfig.isListViewEnabled !== undefined
+        ? window.sponsoredProductConfig.isListViewEnabled
+        : true;
+
+    if (!isListViewEnabled) {
+      applyAdditionalStyles();
+    }
 
     hideLoadingSpinner();
   } catch (e) {

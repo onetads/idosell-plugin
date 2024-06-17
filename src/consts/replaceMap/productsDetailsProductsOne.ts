@@ -1,7 +1,6 @@
 import {
   CONTENT,
   PRODUCT_DESCRIPTION_KEY,
-  PRODUCT_DESCRIPTION_TRAIT_KEY,
   PRODUCT_ID_KEY,
   PRODUCT_IMAGE_URL_KEY,
   PRODUCT_LINK_KEY,
@@ -28,34 +27,7 @@ export default {
       },
       {
         selector: '.product .product__icon',
-        canBeNull: true,
         replace: ['data-product-id'],
-      },
-      {
-        selector: '.product .product__compare_item',
-        canBeNull: true,
-        replace: ['href'],
-        prepareValue: (element) => {
-          const preparedUrl = (element as HTMLAnchorElement).href
-            .replace('remove', 'add')
-            .replace(/(comparers=add).*/, '$1' + `&product=${PRODUCT_ID_KEY}`);
-
-          return preparedUrl;
-        },
-      },
-      {
-        selector: '.product .product__compare_item',
-        canBeNull: true,
-        replace: [CONTENT],
-        prepareValue: (element) => {
-          const isCompareAdd = element.className.includes('--add');
-
-          if (!isCompareAdd) {
-            return '+ Dodaj do porównania';
-          }
-
-          return element.innerHTML;
-        },
       },
       {
         selector: '.product .product-add-to-bsk',
@@ -81,12 +53,10 @@ export default {
     map: [
       {
         selector: '.product .product__icon',
-        canBeNull: true,
         replace: ['title'],
       },
       {
         selector: '.product .product__icon img',
-        canBeNull: true,
         replace: ['alt'],
       },
       {
@@ -170,18 +140,7 @@ export default {
     map: [
       {
         selector: '.product .product__icon img',
-        canBeNull: true,
         replace: ['src'],
-      },
-      {
-        selector: '.product .product__icon img',
-        canBeNull: true,
-        replace: ['data-src'],
-      },
-      {
-        selector: '.product .product__icon source',
-        canBeNull: true,
-        replace: ['srcset'],
       },
       {
         selector: '.product .product__icon source',
@@ -191,12 +150,7 @@ export default {
       {
         selector: '.product .product__icon img',
         canBeNull: true,
-        replace: ['data-original'],
-      },
-      {
-        selector: '.product .product__icon img',
-        canBeNull: true,
-        replace: ['data-additional'],
+        replace: ['data-src'],
       },
     ],
   },
@@ -206,11 +160,15 @@ export default {
     map: [
       {
         selector: '.product .product__icon',
-        canBeNull: true,
         replace: ['href'],
       },
       {
         selector: '.product .product__name',
+        replace: ['href'],
+      },
+      {
+        selector: '.product .product__see',
+        canBeNull: true,
         replace: ['href'],
       },
     ],
@@ -221,17 +179,6 @@ export default {
     map: [
       {
         selector: '.product .product_cleardescription',
-        replace: [CONTENT],
-        canBeNull: true,
-      },
-    ],
-  },
-
-  [EProductElements.DESCRIPTION_TRAIT]: {
-    key: PRODUCT_DESCRIPTION_TRAIT_KEY,
-    map: [
-      {
-        selector: '.product .description_trait',
         replace: [CONTENT],
         canBeNull: true,
       },

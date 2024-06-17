@@ -241,7 +241,7 @@ class ProductManager extends TemplateManager {
     // We need to run this event after slider reinitialization
     for (const product of products) {
       if (
-        this.page === 'MAIN_PAGE' &&
+        (this.page === 'MAIN_PAGE' || this.page === 'PRODUCT_DETAILS_PAGE') &&
         app_shop &&
         app_shop.fn &&
         app_shop.fn.addToBasketAjax
