@@ -7,7 +7,7 @@ const applyAdditionalStyles = () => {
     `.${SPONSORED_PRODUCT_CLASS}`,
   );
 
-  function updateVisibility() {
+  const updateVisibility = () => {
     if (searchViewElement?.classList.contains('--list')) {
       products.forEach((product) => {
         product.style.display = 'none';
@@ -17,7 +17,7 @@ const applyAdditionalStyles = () => {
         product.style.display = 'block';
       });
     }
-  }
+  };
 
   updateVisibility();
 

@@ -66,7 +66,6 @@ class ProductManager extends TemplateManager {
   };
 
   private deleteExistingProduct = (id: string) => {
-    deleteExisitingSponsoredProducts();
     const productIdSelector = getProductsIdSelectorIfExists(this.page);
     const productIdExtractorKey = getProductsIdExtractorIfExists(this.page);
 
@@ -164,6 +163,8 @@ class ProductManager extends TemplateManager {
       productsContainer = this.productsContainer.querySelector(
         '.slick-track',
       ) as HTMLDivElement;
+
+      $(`${getSliderContainerSelector(this.page)}`).slick('unslick');
     }
 
     deleteExisitingSponsoredProducts();
@@ -206,8 +207,6 @@ class ProductManager extends TemplateManager {
       taggedProductElement.classList.add(SPONSORED_PRODUCT_CLASS);
 
       if (this.isSlider) {
-        $(`${getSliderContainerSelector(this.page)}`).slick('unslick');
-
         productsContainer = document.querySelector(
           getSliderContainerSelector(this.page) || '',
         ) as HTMLDivElement;
