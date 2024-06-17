@@ -7,6 +7,7 @@ import PRODUCT_DETAILS_ASSOCIATED_ONE_REPLACE_MAP from 'consts/replaceMap/produc
 import PRODUCT_DETAILS_ASSOCIATED_TWO_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedTwo';
 import PRODUCT_DETAILS_ASSOCIATED_THREE_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedThree';
 import PRODUCT_DETAILS_ASSOCIATED_FOUR_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedFour';
+import PRODUCT_DETAILS_PRODUCTS_ZONE_ONE_REPLACE_MAP from 'consts/replaceMap/productsDetailsProductsOne';
 
 import MAIN_PAGE_HOTSPOT_ONE_REPLACE_MAP from 'consts/replaceMap/mainPageHotSpotOne';
 import MAIN_PAGE_HOTSPOT_TWO_REPLACE_MAP from 'consts/replaceMap/mainPageHotSpotTwo';
@@ -29,6 +30,8 @@ const REPLACE_CONTENT_MAP: TReplaceContentMap = {
     PRODUCT_DETAILS_ASSOCIATED_THREE_REPLACE_MAP,
   [ETemplates.PRODUCT_DETAILS_ASSOCIATED_FOUR]:
     PRODUCT_DETAILS_ASSOCIATED_FOUR_REPLACE_MAP,
+  [ETemplates.PRODUCT_DETAILS_PRODUCTS_ZONE_ONE]:
+    PRODUCT_DETAILS_PRODUCTS_ZONE_ONE_REPLACE_MAP,
 
   [ETemplates.MAIN_PAGE_HOTSPOT_ONE]: MAIN_PAGE_HOTSPOT_ONE_REPLACE_MAP,
   [ETemplates.MAIN_PAGE_HOTSPOT_TWO]: MAIN_PAGE_HOTSPOT_TWO_REPLACE_MAP,

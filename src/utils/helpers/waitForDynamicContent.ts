@@ -11,6 +11,15 @@ const waitForDynamicContent = async (page: TPages) =>
         const grandParentProductsContainer =
           currentProductsContainer.parentElement!.parentElement!;
 
+        // For #products_zone1 ajaxload is always true
+        if (
+          currentProductsContainer.id === 'products_zone1' ||
+          parentProductsContainer.id === 'products_zone1'
+        ) {
+          clearInterval(intervalId);
+          resolve();
+        }
+
         if (
           grandParentProductsContainer.dataset.ajaxload !== 'true' &&
           parentProductsContainer.dataset.ajaxload !== 'true'

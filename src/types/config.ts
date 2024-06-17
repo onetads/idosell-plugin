@@ -14,6 +14,7 @@ type TPageConfigCreator<TZone> = {
 type TSponsoredProductConfig = {
   tagLabel: string;
   isLoaderVisible: boolean;
+  isListViewEnabled: boolean;
 
   productsListing: TPageConfigCreator<TListingPageZones>;
   pageDetails: TPageConfigCreator<TProductDetailsZones>;
