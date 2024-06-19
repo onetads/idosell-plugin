@@ -15,11 +15,9 @@ import {
   overrideProductStyles,
 } from 'managers/ProductManager/ProductManager.utils';
 import TemplateManager from 'managers/TemplateManager/TemplateManager';
-import { getMappedTemplate } from 'managers/TemplateManager/TemplateManager.utils';
 import { TPages } from 'types/pages';
 import { TCheckProductValueMap, TFormattedProduct } from 'types/product';
 import { TSlickSliderOptions } from 'types/slider';
-import { ETemplates } from 'types/templates';
 import getMessage from 'utils/formatters/getMessage';
 import deleteExisitingSponsoredProducts from 'utils/helpers/deleteExistingSponsoredProducts';
 import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor';
@@ -125,10 +123,9 @@ class ProductManager extends TemplateManager {
 
       labelElement.appendChild(sponsoredLabelLink);
     }
+    console.log(this.productsContainer);
 
-    if (
-      getMappedTemplate(this.page) === ETemplates.PRODUCT_DETAILS_ASSOCIATED_ONE
-    ) {
+    if (this.productsContainer.parentElement?.classList.contains('--list')) {
       const productNameContainer = productElement.querySelector(
         '.product__name',
       )?.parentElement as HTMLDivElement;
