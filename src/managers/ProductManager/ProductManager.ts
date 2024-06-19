@@ -123,8 +123,9 @@ class ProductManager extends TemplateManager {
 
       labelElement.appendChild(sponsoredLabelLink);
     }
-    console.log(this.productsContainer);
 
+    // associated section with products have 2 different structures of product elements
+    // so we need to check which one is used and append label to the correct element
     if (this.productsContainer.parentElement?.classList.contains('--list')) {
       const productNameContainer = productElement.querySelector(
         '.product__name',
