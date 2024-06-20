@@ -1,0 +1,42 @@
+import { ETemplates, TReplaceContentMap } from 'types/templates';
+
+import PRODUCT_LISTING_REPLACE_MAP from 'consts/replaceMap/productsListing';
+import PRODUCT_LISTING_HOTSPOT_REPLACE_MAP from 'consts/replaceMap/productsListingHotspot';
+
+import PRODUCT_DETAILS_ASSOCIATED_ONE_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedOne';
+import PRODUCT_DETAILS_ASSOCIATED_TWO_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedTwo';
+import PRODUCT_DETAILS_ASSOCIATED_THREE_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedThree';
+import PRODUCT_DETAILS_ASSOCIATED_FOUR_REPLACE_MAP from 'consts/replaceMap/productsDetailsAssociatedFour';
+import PRODUCT_DETAILS_PRODUCTS_ZONE_ONE_REPLACE_MAP from 'consts/replaceMap/productsDetailsProductsOne';
+
+import MAIN_PAGE_HOTSPOT_ONE_REPLACE_MAP from 'consts/replaceMap/mainPageHotSpotOne';
+import MAIN_PAGE_HOTSPOT_TWO_REPLACE_MAP from 'consts/replaceMap/mainPageHotSpotTwo';
+import MAIN_PAGE_HOTSPOT_THREE_REPLACE_MAP from 'consts/replaceMap/mainPageHotSpotThree';
+import MAIN_PAGE_HOTSPOT_FOUR_REPLACE_MAP from 'consts/replaceMap/mainPageHotspotFour';
+
+import BASKET_PAGE_HOTSPOT_REPLACE_MAP from 'consts/replaceMap/basketPageHotSpot';
+
+const REPLACE_CONTENT_MAP: TReplaceContentMap = {
+  [ETemplates.BASKET_PAGE_HOTSPOT]: BASKET_PAGE_HOTSPOT_REPLACE_MAP,
+
+  [ETemplates.PRODUCT_LISTING]: PRODUCT_LISTING_REPLACE_MAP,
+  [ETemplates.PRODUCT_LISTING_HOTSPOT]: PRODUCT_LISTING_HOTSPOT_REPLACE_MAP,
+
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_ONE]:
+    PRODUCT_DETAILS_ASSOCIATED_ONE_REPLACE_MAP,
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_TWO]:
+    PRODUCT_DETAILS_ASSOCIATED_TWO_REPLACE_MAP,
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_THREE]:
+    PRODUCT_DETAILS_ASSOCIATED_THREE_REPLACE_MAP,
+  [ETemplates.PRODUCT_DETAILS_ASSOCIATED_FOUR]:
+    PRODUCT_DETAILS_ASSOCIATED_FOUR_REPLACE_MAP,
+  [ETemplates.PRODUCT_DETAILS_PRODUCTS_ZONE_ONE]:
+    PRODUCT_DETAILS_PRODUCTS_ZONE_ONE_REPLACE_MAP,
+
+  [ETemplates.MAIN_PAGE_HOTSPOT_ONE]: MAIN_PAGE_HOTSPOT_ONE_REPLACE_MAP,
+  [ETemplates.MAIN_PAGE_HOTSPOT_TWO]: MAIN_PAGE_HOTSPOT_TWO_REPLACE_MAP,
+  [ETemplates.MAIN_PAGE_HOTSPOT_THREE]: MAIN_PAGE_HOTSPOT_THREE_REPLACE_MAP,
+  [ETemplates.MAIN_PAGE_HOTSPOT_FOUR]: MAIN_PAGE_HOTSPOT_FOUR_REPLACE_MAP,
+};
+
+export { REPLACE_CONTENT_MAP };

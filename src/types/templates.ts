@@ -1,0 +1,38 @@
+import { EProductElements } from 'types/product';
+
+enum ETemplates {
+  PRODUCT_LISTING = 'PRODUCT_LISTING',
+  PRODUCT_LISTING_HOTSPOT = 'PRODUCT_LISTING_HOTSPOT',
+  BASKET_PAGE_HOTSPOT = 'BASKET_PAGE_HOTSPOT',
+
+  PRODUCT_DETAILS_ASSOCIATED_ONE = 'PRODUCT_DETAILS_ASSOCIATED_ONE',
+  PRODUCT_DETAILS_ASSOCIATED_TWO = 'PRODUCT_DETAILS_ASSOCIATED_TWO',
+  PRODUCT_DETAILS_ASSOCIATED_THREE = 'PRODUCT_DETAILS_ASSOCIATED_THREE',
+  PRODUCT_DETAILS_ASSOCIATED_FOUR = 'PRODUCT_DETAILS_ASSOCIATED_FOUR',
+  PRODUCT_DETAILS_PRODUCTS_ZONE_ONE = 'PRODUCT_DETAILS_PRODUCTS_ZONE_ONE',
+
+  MAIN_PAGE_HOTSPOT_ONE = 'MAIN_PAGE_HOTSPOT_ONE',
+  MAIN_PAGE_HOTSPOT_TWO = 'MAIN_PAGE_HOTSPOT_TWO',
+  MAIN_PAGE_HOTSPOT_THREE = 'MAIN_PAGE_HOTSPOT_THREE',
+  MAIN_PAGE_HOTSPOT_FOUR = 'MAIN_PAGE_HOTSPOT_FOUR',
+}
+
+type TContentMap = {
+  selector: string;
+  replace: string[];
+  canBeNull?: boolean;
+  prepareValue?: (item: Element) => string;
+};
+
+type TContentMapItem = {
+  key: string;
+  map: TContentMap[];
+};
+
+type TReplaceContentMap = Record<
+  ETemplates,
+  Record<EProductElements, TContentMapItem>
+>;
+
+export { ETemplates };
+export { TReplaceContentMap, TContentMapItem };
