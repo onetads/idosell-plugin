@@ -32,6 +32,11 @@ export default {
         replace: ['data-product-id'],
       },
       {
+        selector: '.product .product__addtobasket button',
+        canBeNull: true,
+        replace: ['data-product_id'],
+      },
+      {
         selector: '.product .product__compare_item',
         canBeNull: true,
         replace: ['href'],
