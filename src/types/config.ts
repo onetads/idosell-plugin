@@ -11,10 +11,16 @@ type TPageConfigCreator<TZone> = {
   productsCount: number;
 };
 
+type TSponsoredProductConfigExecution = {
+  onlyAddToBasked: boolean;
+}
+
 type TSponsoredProductConfig = {
   tagLabel: string;
   isLoaderVisible: boolean;
   isListViewEnabled: boolean;
+
+  execution?: Partial<TSponsoredProductConfigExecution>
 
   productsListing: TPageConfigCreator<TListingPageZones>;
   pageDetails: TPageConfigCreator<TProductDetailsZones>;

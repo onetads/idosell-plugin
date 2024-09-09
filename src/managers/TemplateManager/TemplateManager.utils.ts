@@ -14,8 +14,10 @@ const checkIsProductAvailable = (product: HTMLElement) => {
 
 const getMappedTemplate = (page: TPages): ETemplates => {
   const currentPageConfig = window.sponsoredProductConfig[mapConfigPages(page)];
-
   return TEMPLATES_MAP[currentPageConfig.zone];
 };
 
-export { checkIsProductAvailable, getMappedTemplate };
+const shouldOnlyRunAddToBasket = (): boolean =>
+    window.sponsoredProductConfig.execution?.onlyAddToBasked === true;
+
+export { checkIsProductAvailable, getMappedTemplate, shouldOnlyRunAddToBasket };
