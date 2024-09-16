@@ -15,7 +15,7 @@ const mapConfigPages = (page: TPages) =>
     [BASKET_PAGE]: 'basketPage',
   })[page] as keyof Omit<
     TSponsoredProductConfig,
-    'tagLabel' | 'isLoaderVisible' | 'isListViewEnabled'
+    'tagLabel' | 'isLoaderVisible' | 'isListViewEnabled' | 'execution'
   >;
 
 export default mapConfigPages;

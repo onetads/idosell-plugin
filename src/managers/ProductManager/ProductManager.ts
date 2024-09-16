@@ -24,12 +24,16 @@ import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor
 import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
 import getSliderContainerSelector from 'utils/helpers/getSliderContainerSelector';
 import { hideLoadingSpinner } from 'utils/helpers/loadingSpinner';
+import {shouldOnlyRunAddToBasket} from "managers/TemplateManager/TemplateManager.utils";
 
 class ProductManager extends TemplateManager {
+  shouldOnlyRunAddToBasket: boolean;
+
   constructor(page: TPages) {
     super(page);
 
     this.templateHTML = this.getCurrentTemplateHTML();
+    this.shouldOnlyRunAddToBasket = shouldOnlyRunAddToBasket();
   }
 
   private templateHTML: string;
@@ -242,7 +246,7 @@ class ProductManager extends TemplateManager {
     // We need to run this event after slider reinitialization
     for (const product of products) {
       if (
-        (this.page === 'MAIN_PAGE' || this.page === 'PRODUCT_DETAILS_PAGE') &&
+        (this.page === 'MAIN_PAGE' || this.page === 'PRODUCT_DETAILS_PAGE' || this.shouldOnlyRunAddToBasket) &&
         app_shop &&
         app_shop.fn &&
         app_shop.fn.addToBasketAjax
@@ -258,11 +262,14 @@ class ProductManager extends TemplateManager {
 
     try {
       setTimeout(() => {
-        // if product template contains .product-add-to-bsk class
-        // we should not run app_shop.runApp() function
-        // because actions are made by <a> tag with href php actions
+        // Some shops require that we do not run app_shop.runApp()
+        // function a second time
         const shouldRunAppShopFn =
-          !this.templateHTML.includes('product-add-to-bsk');
+          // if product template contains .product-add-to-bsk class
+          // we should not run app_shop.runApp() function
+          // because actions are made by <a> tag with href php actions
+          !this.templateHTML.includes('product-add-to-bsk') &&
+            !this.shouldOnlyRunAddToBasket;
 
         // There were some issues when running this function on details page
         if (
