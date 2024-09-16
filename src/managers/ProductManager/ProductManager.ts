@@ -262,8 +262,6 @@ class ProductManager extends TemplateManager {
 
     try {
       setTimeout(() => {
-        const templateDocument = (new DOMParser()).parseFromString(this.templateHTML, 'text/html');
-
         // Some shops require that we do not run app_shop.runApp()
         // function a second time
         const shouldRunAppShopFn =
@@ -271,12 +269,7 @@ class ProductManager extends TemplateManager {
           // we should not run app_shop.runApp() function
           // because actions are made by <a> tag with href php actions
           !this.templateHTML.includes('product-add-to-bsk') &&
-            !this.shouldOnlyRunAddToBasket &&
-
-          // if product template contains specified element we
-          // should not run the function as it leads to products
-          // being added to basked more than once
-            !templateDocument.querySelector('.product .product__addtobasket button.btn');
+            !this.shouldOnlyRunAddToBasket;
 
         // There were some issues when running this function on details page
         if (
