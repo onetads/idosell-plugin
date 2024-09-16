@@ -23,6 +23,7 @@ yarn eslint - checks for eslint errors
 | `pageDetails` | `object` | Configuration object for **product details page**|
 | `mainPage` | `object` | Configuration object for **main page** |
 | `basketPage` | `object` | Configuration object for **basket page** |
+| `execution`| `object` | Determines plugin's behaviour during execution |
 
 #### Configuration object for product listing, products details, main page and basket page
 
@@ -31,6 +32,12 @@ yarn eslint - checks for eslint errors
 | `isEnabled` | `boolean` | Specifies whether the product should be visible |
 | `zone` | `string` | Specify zone where product should appear. **See available zones below** |
 | `productsCount` | `object` | Specifies the number of products injected into the list |
+
+#### Configuration object for execution
+
+| Key | Type     | Description                                                                              |
+| :-------- | :------- |:-----------------------------------------------------------------------------------------|
+| `onlyAddToBasked` | `boolean` | Specifies whether to only run `app_shop.rn.addToBasketAjax` instead of `app_shop.runApp` |
 
 #### Zones
 
