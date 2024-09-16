@@ -12,7 +12,7 @@ type TPageConfigCreator<TZone> = {
 };
 
 type TSponsoredProductConfigExecution = {
-  onlyAddToBasked: boolean;
+  onlyAddToBasket: boolean;
 }
 
 type TSponsoredProductConfig = {

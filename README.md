@@ -37,7 +37,7 @@ yarn eslint - checks for eslint errors
 
 | Key | Type     | Description                                                                              |
 | :-------- | :------- |:-----------------------------------------------------------------------------------------|
-| `onlyAddToBasked` | `boolean` | Specifies whether to only run `app_shop.rn.addToBasketAjax` instead of `app_shop.runApp` |
+| `onlyAddToBasket` | `boolean` | Specifies whether to only run `app_shop.rn.addToBasketAjax` instead of `app_shop.runApp` |
 
 #### Zones
 

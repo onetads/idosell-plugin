@@ -18,6 +18,6 @@ const getMappedTemplate = (page: TPages): ETemplates => {
 };
 
 const shouldOnlyRunAddToBasket = (): boolean =>
-    window.sponsoredProductConfig.execution?.onlyAddToBasked === true;
+    window.sponsoredProductConfig.execution?.onlyAddToBasket === true;
 
 export { checkIsProductAvailable, getMappedTemplate, shouldOnlyRunAddToBasket };
