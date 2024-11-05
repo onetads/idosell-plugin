@@ -15,8 +15,9 @@ import { REPLACE_CONTENT_MAP } from 'consts/replaceMap';
 import { CONTENT, PRODUCT_IMAGE_URL_KEY } from 'consts/replaceMap/keys';
 import { NOT_VALID_TEMPLATE } from 'consts/templates';
 import {
+  checkIfProductHasDiscount,
   checkIsProductAvailable,
-  getMappedTemplate,
+  getMappedTemplate
 } from 'managers/TemplateManager/TemplateManager.utils';
 import { TPages } from 'types/pages';
 import { EProductElements } from 'types/product';
@@ -39,6 +40,7 @@ class TemplateManager {
   ) as Record<ETemplates, string>;
 
   constructor(page: TPages) {
+
     this.page = page;
     this.currentTemplate = getMappedTemplate(page);
 
@@ -59,20 +61,35 @@ class TemplateManager {
       throw new Error(getMessage(EMPTY_PRODUCTS_ID_LIST));
     }
 
-    for (const product of products) {
+    // get last element index to check later
+    const lastIndexElement = products.length - 1;
+
+    for (const [currentIndex, product] of products.entries()) {
       const currentTemplate = this.templates[getMappedTemplate(this.page)];
       if (currentTemplate === NOT_VALID_TEMPLATE) break;
 
       if (!(product instanceof HTMLElement)) continue;
 
       const elementClassList = product.classList;
+
+      // if current element is last element we can take it
+      if (currentIndex === lastIndexElement) {
+        this.saveTemplateInSessionStorage(product);
+      }
+
       const isProductAvailable =
         elementClassList.contains(PRODUCT_CLASS) &&
         checkIsProductAvailable(product);
 
       if (!isProductAvailable) return;
 
-      this.saveTemplateInSessionStorage(product);
+      // if product has additional info, we can take it
+      const ifProductWithDiscount = checkIfProductHasDiscount(product);
+
+      if (ifProductWithDiscount) {
+        this.saveTemplateInSessionStorage(product);
+        return;
+      }
     }
   };
 

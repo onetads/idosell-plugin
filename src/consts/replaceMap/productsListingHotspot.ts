@@ -187,7 +187,7 @@ export default {
     key: PRODUCT_PRICE_REGULAR_KEY,
     map: [
       {
-        selector: '.product .--max del',
+        selector: '.product .--max',
         replace: [CONTENT],
         canBeNull: true,
       },
