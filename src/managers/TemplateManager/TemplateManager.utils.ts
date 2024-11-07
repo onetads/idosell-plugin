@@ -19,9 +19,11 @@ const checkIsProductAvailable = (product: HTMLElement) => {
 };
 
 const checkIfProductHasDiscount = (product: HTMLElement) => {
-  const productDiscounted= product.querySelector(`.${PRODUCT_OMNIBUS_PRICE}`);
+  const productDiscounted = product.querySelector(`.${PRODUCT_OMNIBUS_PRICE}`);
 
-  if (productDiscounted) {
+  const prices = product.querySelectorAll('.price');
+
+  if (productDiscounted || prices.length > 1) {
     return true;
   }
 };
