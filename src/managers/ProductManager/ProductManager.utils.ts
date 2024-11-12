@@ -43,12 +43,22 @@ const getProductMap = (product: TFormattedProduct) => {
 };
 
 const overrideProductStyles = (product: Element) => {
-  const productPrice = product.querySelector(
-    '.product .price:not(.--points,.--max,.--omnibus)',
+  const selectors = '.product .price:not(.--points,.--max,.--omnibus)'
+
+  const productPrice = product.querySelector(selectors,
   ) as HTMLElement;
 
-  if (productPrice) {
-    productPrice.style.color = 'inherit';
+  if (productPrice instanceof HTMLElement) {
+      const computedStyle = window.getComputedStyle(productPrice);
+      const computedColor = computedStyle.color || 'inherit';
+
+      if (!productPrice.style.color && computedColor !== 'inherit') {
+        productPrice.style.color = 'inherit';
+      }
+
+      if (product.querySelectorAll('.price').length === 1) {
+        productPrice.style.color = 'inherit';
+      }
   }
 
   const traits = product.querySelectorAll<HTMLElement>('.param_trait li');

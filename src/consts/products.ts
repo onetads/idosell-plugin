@@ -44,6 +44,8 @@ const MAIN_PAGE_HOT_SPOT_THREE_LIST_SELECTOR = '#main_hotspot_zone3 .products';
 const MAIN_PAGE_HOT_SPOT_FOUR_LIST_SELECTOR = '#main_hotspot_zone4 .products';
 
 const PRODUCT_DISABLE_KEY = 'product_disable';
+const PRODUCT_UNAVAILABLE = 'unavailable';
+const PRODUCT_OMNIBUS_PRICE = 'omnibus_price';
 const PRODUCT_CLASS = 'product';
 const PRODUCT_NOT_AVAILABLE_ID = 'product_tell_availability';
 const PRODUCT_SELECTOR = `.${PRODUCT_CLASS}:not(.${SPONSORED_PRODUCT_CLASS}):not(:has(#${PRODUCT_NOT_AVAILABLE_ID})):has(.product__icon)`;
@@ -157,6 +159,8 @@ export {
   PRODUCT_ID_SELECTORS,
   PRODUCT_CLASS,
   PRODUCT_DISABLE_KEY,
+  PRODUCT_UNAVAILABLE,
+  PRODUCT_OMNIBUS_PRICE,
   PRODUCT_ID_EXTRACTOR_KEYS,
   PRODUCT_SELECTOR,
   CONTAINER_SELECTORS_TO_DELETE,
