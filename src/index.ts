@@ -1,4 +1,4 @@
-import { EMPTY_PRODUCTS_ARRAY } from 'consts/messages';
+import { EMPTY_PRODUCTS_ARRAY, PRODUCT_CONFIG_EMPTY } from 'consts/messages';
 import { initAdManager } from 'managers/AdManager/AdManager.utils';
 import { initProductManager } from 'managers/ProductManager/ProductManager.utils';
 import getMessage from 'utils/formatters/getMessage';
@@ -51,6 +51,12 @@ const runApp = async () => {
     if (!page) return;
 
     const configPage = window.sponsoredProductConfig[mapConfigPages(page)];
+
+    if (parseInt(String(configPage.productsCount)) === 0) {
+      console.warn(getMessage(PRODUCT_CONFIG_EMPTY));
+      hideLoadingSpinner();
+      return;
+    }
 
     if (typeof configPage === 'object' && !configPage.isEnabled) return;
 
