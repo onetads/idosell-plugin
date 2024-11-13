@@ -186,12 +186,7 @@ export default {
       {
         selector: '.product .product__icon source',
         canBeNull: true,
-        replace: ['srcset'],
-      },
-      {
-        selector: '.product .product__icon source',
-        canBeNull: true,
-        replace: ['data-srcset'],
+        replace: ['src', 'srcset', 'data-srcset'],
       },
       {
         selector: '.product .product__icon img',
