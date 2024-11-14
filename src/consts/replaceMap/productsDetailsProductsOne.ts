@@ -30,6 +30,11 @@ export default {
         replace: ['data-product-id'],
       },
       {
+        selector: '.product .product__addtobasket button',
+        canBeNull: true,
+        replace: ['data-product_id'],
+      },
+      {
         selector: '.product .product-add-to-bsk',
         canBeNull: true,
         replace: ['href'],
@@ -145,7 +150,7 @@ export default {
       {
         selector: '.product .product__icon source',
         canBeNull: true,
-        replace: ['data-srcset'],
+        replace: ['src', 'srcset', 'data-srcset'],
       },
       {
         selector: '.product .product__icon img',
