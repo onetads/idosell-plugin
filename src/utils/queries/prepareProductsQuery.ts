@@ -36,6 +36,9 @@ const prepareProductsQuery = (ids: string) => {
                     link
                 }
                 sizes {
+                    name
+                    id
+                    code
                     availability {
                         status
                     }

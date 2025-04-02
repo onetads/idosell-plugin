@@ -192,6 +192,7 @@ class AdManager {
       priceMain: price.price.gross.formatted,
       producerName: producer.name,
       producerUrl: producer.link,
+      sizes: sizes.map((size) => size.name),
       title: name,
       points: pointsReceive,
       priceRegular: price.crossedPrice?.gross?.formatted || '',
