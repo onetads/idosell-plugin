@@ -5,6 +5,7 @@
   "scripts": {
     "eslint": "eslint --ext .js,.ts ./src",
     "build": "webpack --config webpack.config.js --mode=production",
+    "build:dev": "webpack --config webpack.config.js",
     "prepare": "rimraf .husky/ && husky && echo \"yarn eslint\" > .husky/pre-push"
   },
   "devDependencies": {

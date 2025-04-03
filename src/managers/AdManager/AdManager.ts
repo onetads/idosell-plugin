@@ -181,18 +181,31 @@ class AdManager {
     const priceSign = omnibusPriceIsHigherThanSellingPrice ? '+' : '-';
     const omnibusPriceSign = getOmnibusPriceSign();
 
+    const showFilteredSizes = (sizes: any, sizeVariant: string = 'eu') => {
+      const filteredSizesByAvailability = sizes.filter((size: any) => size.availability.status !== 'disable');
+
+      return filteredSizesByAvailability.map((size: any) => {
+        const variants = size.name.split('/');
+        const euVariant = variants.find((variant: string) => variant.toLowerCase().includes(sizeVariant));
+        if (euVariant) {
+          size.name = euVariant.replace(/[^\d.]/g, '').trim();
+        }
+        return size;
+      }).map((size: any) => size.name);
+    };
+
     return {
       description,
       id: id.toString(),
       imageUrl: offer_image,
       link: trackingAdLink + offer_url,
-      pricePercent: `${priceSign}${price.youSavePercent?.toString()}%`,
+      pricePercent: price.youSavePercent ? `${priceSign}${price.youSavePercent?.toString()}%` : null,
       priceOmnibus: price.omnibusPrice?.gross?.formatted || '',
       priceOmnibusPercent: `${omnibusPriceSign}${price.omnibusPriceDetails?.youSavePercent?.toString()}%`,
       priceMain: price.price.gross.formatted,
       producerName: producer.name,
       producerUrl: producer.link,
-      sizes: sizes.map((size) => size.name),
+      sizes: showFilteredSizes(sizes, 'eu'),
       title: name,
       points: pointsReceive,
       priceRegular: price.crossedPrice?.gross?.formatted || '',

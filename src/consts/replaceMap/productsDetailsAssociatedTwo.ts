@@ -115,6 +115,11 @@ export default {
         selector: '.product .price:has(.omnibus_label) .price_percent',
         replace: [CONTENT],
       },
+      {
+        canBeNull: true,
+        selector: '.promo_percent',
+        replace: [CONTENT]
+      }
     ],
   },
 

@@ -28,7 +28,7 @@ const getProductMap = (product: TFormattedProduct) => {
     [PRODUCT_PRODUCER_NAME_KEY]: product.producerName,
     [PRODUCT_PRODUCER_URL_KEY]: product.producerUrl,
     [PRODUCT_PRICE_MAIN_KEY]: product.priceMain,
-    [PRODUCT_PRICE_PERCENT_KEY]: product.pricePercent,
+    [PRODUCT_PRICE_PERCENT_KEY]: product.pricePercent || '',
     [PRODUCT_PRICE_OMNIBUS_KEY]: product.priceOmnibus,
     [PRODUCT_PRICE_OMNIBUS_PERCENT_KEY]: product.priceOmnibusPercent,
     [PRODUCT_IMAGE_URL_KEY]: product.imageUrl,
