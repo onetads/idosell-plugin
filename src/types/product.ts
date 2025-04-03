@@ -18,6 +18,7 @@ enum EProductElements {
   PRODUCER = 'PRODUCER',
   PRODUCER_URL = 'PRODUCER_URL',
   PRICE_MAIN = 'PRICE_MAIN',
+  SIZE = 'SIZE',
   PRICE_PERCENT = 'PRICE_PERCENT',
   PRICE_OMNIBUS = 'PRICE_OMNIBUS',
   PRICE_OMNIBUS_PERCENT = 'PRICE_OMNIBUS_PERCENT',
@@ -94,6 +95,9 @@ type TProductResponse = {
           link: string;
         };
         sizes: {
+          name: string;
+          id: number;
+          code: string;
           availability: {
             status: string;
           };
@@ -117,6 +121,7 @@ type TFormattedProduct = {
   description: string;
   points: string;
   priceRegular: string;
+  sizes: string[];
   dsaUrl: string | undefined;
   div: string;
   renderAd: () => void;

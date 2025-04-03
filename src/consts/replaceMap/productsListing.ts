@@ -14,11 +14,22 @@ import {
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
   PRODUCT_TITLE_KEY,
+  PRODUCT_SIZE,
 } from 'consts/replaceMap/keys';
 import { EProductElements } from 'types/product';
 import { TContentMapItem } from 'types/templates';
 
 export default {
+  [EProductElements.SIZE]: {
+    key: PRODUCT_SIZE,
+    map: [
+      {
+        selector: '.product .product__size',
+        replace: [CONTENT],
+        canBeNull: true,
+      },
+    ],
+  },
   [EProductElements.ID]: {
     key: PRODUCT_ID_KEY,
     map: [
@@ -145,7 +156,12 @@ export default {
         selector: '.product .price:has(.omnibus_label) .price_percent',
         replace: [CONTENT],
       },
-    ],
+      {
+        canBeNull: true,
+        selector: '.promo_percent',
+        replace: [CONTENT]
+      }
+    ]
   },
 
   [EProductElements.PRICE_OMNIBUS]: {

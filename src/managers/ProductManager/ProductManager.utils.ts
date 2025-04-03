@@ -12,6 +12,7 @@ import {
   PRODUCT_PRICE_REGULAR_KEY,
   PRODUCT_PRODUCER_NAME_KEY,
   PRODUCT_PRODUCER_URL_KEY,
+  PRODUCT_SIZE,
   PRODUCT_TITLE_KEY,
 } from 'consts/replaceMap/keys';
 import ProductManager from 'managers/ProductManager/ProductManager';
@@ -27,7 +28,7 @@ const getProductMap = (product: TFormattedProduct) => {
     [PRODUCT_PRODUCER_NAME_KEY]: product.producerName,
     [PRODUCT_PRODUCER_URL_KEY]: product.producerUrl,
     [PRODUCT_PRICE_MAIN_KEY]: product.priceMain,
-    [PRODUCT_PRICE_PERCENT_KEY]: product.pricePercent,
+    [PRODUCT_PRICE_PERCENT_KEY]: product.pricePercent || '',
     [PRODUCT_PRICE_OMNIBUS_KEY]: product.priceOmnibus,
     [PRODUCT_PRICE_OMNIBUS_PERCENT_KEY]: product.priceOmnibusPercent,
     [PRODUCT_IMAGE_URL_KEY]: product.imageUrl,
@@ -39,26 +40,26 @@ const getProductMap = (product: TFormattedProduct) => {
     ),
     [PRODUCT_POINTS_KEY]: product.points,
     [PRODUCT_PRICE_REGULAR_KEY]: product.priceRegular,
+    [PRODUCT_SIZE]: product.sizes,
   };
 };
 
 const overrideProductStyles = (product: Element) => {
-  const selectors = '.product .price:not(.--points,.--max,.--omnibus)'
+  const selectors = '.product .price:not(.--points,.--max,.--omnibus)';
 
-  const productPrice = product.querySelector(selectors,
-  ) as HTMLElement;
+  const productPrice = product.querySelector(selectors) as HTMLElement;
 
   if (productPrice instanceof HTMLElement) {
-      const computedStyle = window.getComputedStyle(productPrice);
-      const computedColor = computedStyle.color || 'inherit';
+    const computedStyle = window.getComputedStyle(productPrice);
+    const computedColor = computedStyle.color || 'inherit';
 
-      if (!productPrice.style.color && computedColor !== 'inherit') {
-        productPrice.style.color = 'inherit';
-      }
+    if (!productPrice.style.color && computedColor !== 'inherit') {
+      productPrice.style.color = 'inherit';
+    }
 
-      if (product.querySelectorAll('.price').length === 1) {
-        productPrice.style.color = 'inherit';
-      }
+    if (product.querySelectorAll('.price').length === 1) {
+      productPrice.style.color = 'inherit';
+    }
   }
 
   const traits = product.querySelectorAll<HTMLElement>('.param_trait li');

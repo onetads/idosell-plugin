@@ -132,7 +132,6 @@ const PRODUCT_ID_EXTRACTOR_KEYS: TProductIdExtractorKeys = {
 const CONTAINER_SELECTORS_TO_DELETE = [
   '.product__traits',
   '.label_icons',
-  '.product__details',
   '.product__availability',
   '.product__yousave',
   '.product__versions',

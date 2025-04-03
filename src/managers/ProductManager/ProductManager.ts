@@ -24,7 +24,7 @@ import getProductsIdExtractorIfExists from 'utils/helpers/getProductsIdExtractor
 import getProductsIdSelectorIfExists from 'utils/helpers/getProductsIdSelector';
 import getSliderContainerSelector from 'utils/helpers/getSliderContainerSelector';
 import { hideLoadingSpinner } from 'utils/helpers/loadingSpinner';
-import {shouldOnlyRunAddToBasket} from "managers/TemplateManager/TemplateManager.utils";
+import { shouldOnlyRunAddToBasket } from 'managers/TemplateManager/TemplateManager.utils';
 
 class ProductManager extends TemplateManager {
   shouldOnlyRunAddToBasket: boolean;
@@ -178,10 +178,21 @@ class ProductManager extends TemplateManager {
 
       for (const key in mappedProductValues) {
         const objKey = key as keyof typeof mappedProductValues;
+        const value = mappedProductValues[objKey];
+        let matchIndex = 0;
 
-        productTemplateHTML = productTemplateHTML.replaceAll(
+        productTemplateHTML = productTemplateHTML.replace(
           new RegExp(key, 'g'),
-          mappedProductValues[objKey]?.toString(),
+          () => {
+            if (Array.isArray(value)) {
+              const replacement =
+                value[matchIndex] !== undefined ? value[matchIndex] : '';
+              matchIndex++;
+              return replacement;
+            }
+
+            return (value ?? '').toString();
+          },
         );
       }
 
@@ -246,7 +257,9 @@ class ProductManager extends TemplateManager {
     // We need to run this event after slider reinitialization
     for (const product of products) {
       if (
-        (this.page === 'MAIN_PAGE' || this.page === 'PRODUCT_DETAILS_PAGE' || this.shouldOnlyRunAddToBasket) &&
+        (this.page === 'MAIN_PAGE' ||
+          this.page === 'PRODUCT_DETAILS_PAGE' ||
+          this.shouldOnlyRunAddToBasket) &&
         app_shop &&
         app_shop.fn &&
         app_shop.fn.addToBasketAjax
@@ -269,7 +282,7 @@ class ProductManager extends TemplateManager {
           // we should not run app_shop.runApp() function
           // because actions are made by <a> tag with href php actions
           !this.templateHTML.includes('product-add-to-bsk') &&
-            !this.shouldOnlyRunAddToBasket;
+          !this.shouldOnlyRunAddToBasket;
 
         // There were some issues when running this function on details page
         if (
