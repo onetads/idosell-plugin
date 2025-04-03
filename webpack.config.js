@@ -20,6 +20,16 @@ module.exports = {
       managers: path.resolve(__dirname, './src/managers'),
     },
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 9090,
+    open: false,
+    allowedHosts: ['all'],
+  },
+  devtool: 'eval-source-map',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),

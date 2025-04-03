@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "eslint": "eslint --ext .js,.ts ./src",
+    "dev": "webpack serve --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js --mode=production",
     "prepare": "rimraf .husky/ && husky && echo \"yarn eslint\" > .husky/pre-push"
   },
@@ -26,7 +27,7 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {}
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
+  }
 }
