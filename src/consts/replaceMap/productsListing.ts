@@ -24,7 +24,7 @@ export default {
     key: PRODUCT_SIZE,
     map: [
       {
-        selector: '.product .product__size',
+        selector: '.product .product__size:not(.--label)',
         replace: [CONTENT],
         canBeNull: true,
       },
