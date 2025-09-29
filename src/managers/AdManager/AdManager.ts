@@ -188,7 +188,7 @@ class AdManager {
         const variants = size.name.split('/');
         const euVariant = variants.find((variant: string) => variant.toLowerCase().includes(sizeVariant));
         if (euVariant) {
-          size.name = euVariant.replace(/[^\d.]/g, '').trim();
+          size.name = euVariant.replace(/[^\d.,\/ ]/g, '').trim();
         }
         return size;
       }).map((size: any) => size.name);
