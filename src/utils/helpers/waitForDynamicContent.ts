@@ -7,6 +7,14 @@ const waitForDynamicContent = async (page: TPages) =>
     const intervalId = setInterval(() => {
       try {
         const currentProductsContainer = getProductsContainerIfExists(page);
+
+        // If productsCount is 0, container might be null - just resolve
+        if (!currentProductsContainer) {
+          clearInterval(intervalId);
+          resolve();
+          return;
+        }
+
         const parentProductsContainer = currentProductsContainer.parentElement!;
         const grandParentProductsContainer =
           currentProductsContainer.parentElement!.parentElement!;

@@ -39,11 +39,29 @@ const getProductsContainer = (page: TPages) => {
   );
 };
 
-const getProductsContainerIfExists = (page: TPages) => {
+const getProductsCountForPage = (page: TPages): number => {
+  if (page === PRODUCTS_LIST) {
+    return window.sponsoredProductConfig.productsListing.productsCount;
+  }
+  if (page === PRODUCT_DETAILS_PAGE) {
+    return window.sponsoredProductConfig.pageDetails.productsCount;
+  }
+  if (page === BASKET_PAGE) {
+    return window.sponsoredProductConfig.basketPage.productsCount;
+  }
+  return window.sponsoredProductConfig.mainPage.productsCount;
+};
+
+const getProductsContainerIfExists = (page: TPages): Element | null => {
   const productsContainer = getProductsContainer(page);
 
+  const productsCount = getProductsCountForPage(page);
+  if (!productsContainer && productsCount === 0) {
+    return null;
+  }
+
   if (!productsContainer) {
-    throw new Error(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
+    console.warn(getMessage(PRODUCTS_CONTAINER_NOT_FOUND));
   }
 
   return productsContainer;
