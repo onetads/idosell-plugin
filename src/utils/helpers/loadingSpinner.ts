@@ -27,6 +27,10 @@ const showLoadingSpinner = () => {
 
   if (!page) return;
 
+  const productContainer = getProductsContainerIfExists(page);
+
+  if (!productContainer) return;
+
   const bodyBgColor = window
     .getComputedStyle(document.body, null)
     .getPropertyValue('background-color');
@@ -41,11 +45,9 @@ const showLoadingSpinner = () => {
   loadingSpinner.classList.add(LOADING_SPINNER_CLASS);
   loadingSpinnerContainer.appendChild(loadingSpinner);
 
-  const productContainer = getProductsContainerIfExists(page) as HTMLElement;
-
   // Does not set position relative if the container is accordion - tabs__item class exists in accordion wrappers
   if (!productContainer.parentElement!.classList.contains('tabs__item')) {
-    productContainer.style.position = 'relative';
+    (productContainer as HTMLElement).style.position = 'relative';
   }
 
   document.body.appendChild(spinnerStyles);
