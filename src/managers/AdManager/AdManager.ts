@@ -43,6 +43,12 @@ class AdManager {
         const fetchPromises: Promise<void | TFormattedProduct>[] = [];
 
         dlApi.cmd = dlApi.cmd || [];
+        // Shared across all parallel slot fetches so that two slots never
+        // resolve to the same offer. The adserver may return the same offer
+        // at the top of several slots' feeds; without this guard those
+        // duplicates collapse into a single visible card.
+        const usedOfferIds = new Set<string>();
+
         dlApi.cmd.push((dlApiObj) => {
           for (let index = 1; index <= productsCount; index++) {
             const div = SPONSORED_PRODUCT_TAG + index;
@@ -58,40 +64,37 @@ class AdManager {
               tplCode: TPL_CODE,
             })
               .then(async (ads) => {
-                if (
-                  ads &&
-                  ads.fields.feed.offers &&
-                  ads.fields.feed.offers.length
-                ) {
-                  let isAdAvailable = false;
-                  let adIndex = 0;
+                const { offers = [] } = ads?.fields?.feed ?? {};
 
-                  do {
-                    const { offers = [] } = ads.fields.feed;
-                    if (offers.length === 0) return;
-
-                    const offerData = offers[adIndex];
-                    const adData = await this.prepareProductsData(
-                      offerData,
-                      ads.meta.adclick,
-                      ads.meta.dsaurl,
-                    );
-
-                    if (adData) {
-                      isAdAvailable = true;
-                      products.push({
-                        ...adData,
-                        div: div,
-                        renderAd: ads.render,
-                      });
-
-                      return adData as TFormattedProduct;
-                    }
-
-                    adIndex++;
-                  } while (!isAdAvailable);
-                } else {
+                if (!offers.length) {
                   console.warn(getMessage(EMPTY_ADS_ARRAY));
+                  return;
+                }
+
+                // Scan the whole feed until we find an offer that is both
+                // available and not yet taken by another slot. The offer is
+                // reserved synchronously (before the await) so concurrent
+                // slot fetches cannot claim the same one.
+                for (const offerData of offers) {
+                  if (usedOfferIds.has(offerData.offer_id)) continue;
+
+                  usedOfferIds.add(offerData.offer_id);
+
+                  const adData = await this.prepareProductsData(
+                    offerData,
+                    ads.meta.adclick,
+                    ads.meta.dsaurl,
+                  );
+
+                  if (adData) {
+                    products.push({
+                      ...adData,
+                      div: div,
+                      renderAd: ads.render,
+                    });
+
+                    return adData as TFormattedProduct;
+                  }
                 }
               })
               .catch(() => {
