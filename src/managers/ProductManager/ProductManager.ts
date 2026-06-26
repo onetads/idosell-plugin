@@ -4,6 +4,7 @@ import {
   PRODUCT_CLASS,
   SLIDER_CLONED_CLASS,
   SPONSORED_PRODUCT_CLASS,
+  SPONSORED_PRODUCT_TAG,
 } from 'consts/products';
 import {
   PRODUCT_PRICE_OMNIBUS_KEY,
@@ -170,7 +171,22 @@ class ProductManager extends TemplateManager {
     }
 
     deleteExisitingSponsoredProducts();
+    // Each card is inserted with prepend(), which reverses insertion order,
+    // and the products array order is nondeterministic (parallel fetches).
+    // Sort by slot position descending so that after prepend the cards end up
+    // in the DOM as pos=1, pos=2, pos=3 (top to bottom).
+    const getSlotPosition = (div: string) =>
+      parseInt(div.replace(SPONSORED_PRODUCT_TAG, ''), 10);
+
+    products.sort((a, b) => getSlotPosition(b.div) - getSlotPosition(a.div));
+
+    // Tracks product ids already injected in this batch. A product whose id
+    // was already rendered is skipped entirely so its impression never fires
+    // for a creative that would not be displayed (deduplication rejection).
+    const renderedProductIds = new Set<string>();
     for (const product of products) {
+      if (renderedProductIds.has(product.id)) continue;
+
       const productElement = document.createElement('div');
       let productTemplateHTML = this.templateHTML;
 
@@ -230,6 +246,7 @@ class ProductManager extends TemplateManager {
         productsContainer.prepend(taggedProductElement);
       }
 
+      renderedProductIds.add(product.id);
       product.renderAd();
 
       if (
