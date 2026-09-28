@@ -9,6 +9,7 @@ type TPageConfigCreator<TZone> = {
   isEnabled: boolean;
   zone: TZone;
   productsCount: number;
+  itemNumbers?: number[];
 };
 
 type TSponsoredProductConfigExecution = {

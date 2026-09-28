@@ -10,6 +10,7 @@ import {
   showLoadingSpinner,
 } from 'utils/helpers/loadingSpinner';
 import mapConfigPages from 'utils/helpers/mapConfigPages';
+import resolveProductPositions from 'utils/helpers/resolveProductPositions';
 import waitForDlApi from 'utils/helpers/waitForDlApi';
 import waitForDynamicContent from 'utils/helpers/waitForDynamicContent';
 
@@ -22,21 +23,25 @@ window.sponsoredProductConfig = window.sponsoredProductConfig || {
     zone: 'PRODUCT_LISTING',
     isEnabled: true,
     productsCount: 1,
+    itemNumbers: [],
   },
   pageDetails: {
     isEnabled: true,
     zone: 'PRODUCT_DETAILS_ASSOCIATED_ONE',
     productsCount: 1,
+    itemNumbers: [],
   },
   mainPage: {
     isEnabled: true,
     zone: 'MAIN_PAGE_HOTSPOT_FOUR',
     productsCount: 1,
+    itemNumbers: [],
   },
   basketPage: {
     isEnabled: true,
     zone: 'BASKET_PAGE_HOTSPOT',
     productsCount: 1,
+    itemNumbers: [],
   },
 };
 
@@ -63,10 +68,11 @@ const runApp = async () => {
     await waitForDynamicContent(page);
     await waitForDlApi();
 
+    const { hasDedicatedPositions, positions } =
+      resolveProductPositions(configPage);
+
     const AdManager = initAdManager(page);
-    const products = await AdManager.getPromotedProducts(
-      configPage.productsCount,
-    );
+    const products = await AdManager.getPromotedProducts(positions);
 
     if (products.length === 0) {
       throw new Error(getMessage(EMPTY_PRODUCTS_ARRAY));
@@ -74,7 +80,7 @@ const runApp = async () => {
 
     const ProductManager = initProductManager(page);
 
-    ProductManager.injectProduct(products);
+    ProductManager.injectProduct(products, hasDedicatedPositions);
 
     const isListViewEnabled =
       window.sponsoredProductConfig.isListViewEnabled !== undefined

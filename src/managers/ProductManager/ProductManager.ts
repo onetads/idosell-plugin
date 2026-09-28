@@ -91,6 +91,48 @@ class ProductManager extends TemplateManager {
     });
   };
 
+  private getProductTiles = (container: Element) => {
+    const productIdSelector = getProductsIdSelectorIfExists(this.page);
+
+    const tiles = new Set<Element>();
+
+    Array.from(container.querySelectorAll(productIdSelector)).forEach(
+      (element) => {
+        const tile =
+          element.closest(`.${PRODUCT_CLASS}`) ?? element.parentElement;
+
+        if (!tile) return;
+
+        tiles.add(tile);
+      },
+    );
+
+    return Array.from(tiles);
+  };
+
+  private insertProductAtPosition = (
+    container: Element,
+    element: Element,
+    targetPosition: number,
+  ) => {
+    const tiles = this.getProductTiles(container);
+    const anchor = tiles[targetPosition - 1];
+
+    if (anchor?.parentElement) {
+      anchor.parentElement.insertBefore(element, anchor);
+      return;
+    }
+
+    const lastTile = tiles[tiles.length - 1];
+
+    if (lastTile?.parentElement) {
+      lastTile.parentElement.insertBefore(element, lastTile.nextSibling);
+      return;
+    }
+
+    container.append(element);
+  };
+
   private addTagToProductElement = (
     productElement: Element,
     dsaUrl: string | undefined,
@@ -158,7 +200,10 @@ class ProductManager extends TemplateManager {
     return productElement;
   };
 
-  public injectProduct = (products: TFormattedProduct[]) => {
+  public injectProduct = (
+    products: TFormattedProduct[],
+    hasDedicatedPositions: boolean = false,
+  ) => {
     let productsContainer = this.productsContainer;
 
     if (this.isSlider) {
@@ -178,12 +223,21 @@ class ProductManager extends TemplateManager {
     const getSlotPosition = (div: string) =>
       parseInt(div.replace(SPONSORED_PRODUCT_TAG, ''), 10);
 
-    products.sort((a, b) => getSlotPosition(b.div) - getSlotPosition(a.div));
+    if (hasDedicatedPositions) {
+      products.sort((a, b) => a.targetPosition - b.targetPosition);
+    } else {
+      products.sort((a, b) => getSlotPosition(b.div) - getSlotPosition(a.div));
+    }
 
     // Tracks product ids already injected in this batch. A product whose id
     // was already rendered is skipped entirely so its impression never fires
     // for a creative that would not be displayed (deduplication rejection).
     const renderedProductIds = new Set<string>();
+    const positionedProducts: {
+      product: TFormattedProduct;
+      element: Element;
+    }[] = [];
+
     for (const product of products) {
       if (renderedProductIds.has(product.id)) continue;
 
@@ -215,7 +269,7 @@ class ProductManager extends TemplateManager {
       productElement.innerHTML = productTemplateHTML;
       const preparedElement = productElement.firstChild as HTMLDivElement;
 
-      if (!this.isSlider) {
+      if (!this.isSlider && !hasDedicatedPositions) {
         this.deleteExistingProduct(product.id);
       }
 
@@ -234,6 +288,12 @@ class ProductManager extends TemplateManager {
       taggedProductElement.classList.remove(SLIDER_CLONED_CLASS);
       taggedProductElement.id = product.div;
       taggedProductElement.classList.add(SPONSORED_PRODUCT_CLASS);
+
+      if (hasDedicatedPositions) {
+        positionedProducts.push({ product, element: taggedProductElement });
+        renderedProductIds.add(product.id);
+        continue;
+      }
 
       if (this.isSlider) {
         productsContainer = document.querySelector(
@@ -254,6 +314,29 @@ class ProductManager extends TemplateManager {
         typeof window.sponsoredProductHelper === 'function'
       ) {
         window.sponsoredProductHelper(product.id, product.description);
+      }
+    }
+
+    if (hasDedicatedPositions) {
+      for (const { product } of positionedProducts) {
+        this.deleteExistingProduct(product.id);
+      }
+
+      for (const { product, element } of positionedProducts) {
+        this.insertProductAtPosition(
+          productsContainer,
+          element,
+          product.targetPosition,
+        );
+
+        product.renderAd();
+
+        if (
+          window.sponsoredProductHelper &&
+          typeof window.sponsoredProductHelper === 'function'
+        ) {
+          window.sponsoredProductHelper(product.id, product.description);
+        }
       }
     }
 
