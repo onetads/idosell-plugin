@@ -16,10 +16,11 @@ const toPosition = (value: unknown) => {
   return Number.isInteger(parsedValue) && parsedValue > 0 ? parsedValue : null;
 };
 
-const toItemNumbersList = (itemNumbers: unknown) => {
-  if (Array.isArray(itemNumbers)) return itemNumbers;
+const toItemPositionNumbersList = (itemPositionNumbers: unknown) => {
+  if (Array.isArray(itemPositionNumbers)) return itemPositionNumbers;
 
-  if (typeof itemNumbers === 'string') return itemNumbers.split(',');
+  if (typeof itemPositionNumbers === 'string')
+    return itemPositionNumbers.split(',');
 
   return [];
 };
@@ -31,8 +32,10 @@ const resolveProductPositions = (
 
   const uniquePositions = new Set<number>();
 
-  for (const itemNumber of toItemNumbersList(configPage.itemNumbers)) {
-    const position = toPosition(itemNumber);
+  for (const itemPositionNumber of toItemPositionNumbersList(
+    configPage.itemPositionNumbers,
+  )) {
+    const position = toPosition(itemPositionNumber);
 
     if (position) uniquePositions.add(position);
   }

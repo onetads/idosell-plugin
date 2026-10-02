@@ -32,6 +32,7 @@ yarn eslint - checks for eslint errors
 | `isEnabled` | `boolean` | Specifies whether the product should be visible |
 | `zone` | `string` | Specify zone where product should appear. **See available zones below** |
 | `productsCount` | `object` | Specifies the number of products injected into the list |
+| `itemPositionNumbers` | `number[]` | Optional. 1-based list positions in priority order: the first value is used for the 1st sponsored product, the second for the 2nd, and so on. At most `productsCount` values are used. Empty or missing: products are injected from the top of the list |
 
 #### Configuration object for execution
 
@@ -62,6 +63,7 @@ window.sponsoredProductConfig = {
     zone: 'PRODUCT_LISTING_HOTSPOT',
     isEnabled: true,
     productsCount: 2,
+    itemPositionNumbers: [1, 5],
   },
   pageDetails: {
     isEnabled: true,

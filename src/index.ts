@@ -23,25 +23,25 @@ window.sponsoredProductConfig = window.sponsoredProductConfig || {
     zone: 'PRODUCT_LISTING',
     isEnabled: true,
     productsCount: 1,
-    itemNumbers: [],
+    itemPositionNumbers: [],
   },
   pageDetails: {
     isEnabled: true,
     zone: 'PRODUCT_DETAILS_ASSOCIATED_ONE',
     productsCount: 1,
-    itemNumbers: [],
+    itemPositionNumbers: [],
   },
   mainPage: {
     isEnabled: true,
     zone: 'MAIN_PAGE_HOTSPOT_FOUR',
     productsCount: 1,
-    itemNumbers: [],
+    itemPositionNumbers: [],
   },
   basketPage: {
     isEnabled: true,
     zone: 'BASKET_PAGE_HOTSPOT',
     productsCount: 1,
-    itemNumbers: [],
+    itemPositionNumbers: [],
   },
 };
 
