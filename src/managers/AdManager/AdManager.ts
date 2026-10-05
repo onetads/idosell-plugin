@@ -26,7 +26,7 @@ class AdManager {
   }
 
   public getPromotedProducts = async (
-    productsCount: number,
+    positions: number[],
   ): Promise<TFormattedProduct[]> => {
     if (!dlApi.fetchNativeAd)
       throw new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG));
@@ -50,7 +50,8 @@ class AdManager {
         const usedOfferIds = new Set<string>();
 
         dlApi.cmd.push((dlApiObj) => {
-          for (let index = 1; index <= productsCount; index++) {
+          positions.forEach((targetPosition, slotIndex) => {
+            const index = slotIndex + 1;
             const div = SPONSORED_PRODUCT_TAG + index;
 
             const fetchPromise = dlApiObj.fetchNativeAd!({
@@ -90,6 +91,7 @@ class AdManager {
                     products.push({
                       ...adData,
                       div: div,
+                      targetPosition: targetPosition,
                       renderAd: ads.render,
                     });
 
@@ -102,7 +104,7 @@ class AdManager {
               });
 
             fetchPromises.push(fetchPromise);
-          }
+          });
 
           Promise.all(fetchPromises)
             .then(() => resolve(products))

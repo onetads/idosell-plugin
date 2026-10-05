@@ -124,6 +124,7 @@ type TFormattedProduct = {
   sizes: string[];
   dsaUrl: string | undefined;
   div: string;
+  targetPosition: number;
   renderAd: () => void;
 };
 
