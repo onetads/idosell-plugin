@@ -107,7 +107,19 @@ class AdManager {
           });
 
           Promise.all(fetchPromises)
-            .then(() => resolve(products))
+            .then(() => {
+              const getSlot = (div: string) =>
+                parseInt(div.replace(SPONSORED_PRODUCT_TAG, ''), 10);
+
+              products.sort((a, b) => getSlot(a.div) - getSlot(b.div));
+
+              resolve(
+                products.map((product, index) => ({
+                  ...product,
+                  targetPosition: positions[index],
+                })),
+              );
+            })
             .catch(() =>
               reject(new Error(getMessage(ERROR_PROMOTED_PRODUCTS_MSG))),
             );
